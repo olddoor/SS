@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 
 import com.zyl.demo.ss1.entity.User;
 import com.zyl.demo.util.HibernateUtil;
+import com.zyl.demo.util.util_Date;
 
 public class UserDaoImpl implements UserDao {
 
@@ -121,7 +122,7 @@ public class UserDaoImpl implements UserDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<User> getUsers(Map<String, String> m) {
+	public List<User> getUsers(Map<String, String> m) throws Exception {
 		int maxResults=10;
 		int firstResult=0;
 		if(m!=null&&!m.isEmpty()){
@@ -139,10 +140,8 @@ public class UserDaoImpl implements UserDao {
 			}
 		}
 		StringBuffer HQL=new StringBuffer("  from User u WHERE 1=1");
+		Session session = HibernateUtil.currentSession(); 
 		if(m==null||m.equals("")){
-			Session session = HibernateUtil.currentSession(); 
-			Query query=session.createQuery(HQL.toString());
-			return query.list();
 		}else{
 			String loginName=m.get("loginName");
 			String userName=m.get("userName");
@@ -150,7 +149,6 @@ public class UserDaoImpl implements UserDao {
 			String sex=m.get("sex");
 			String updateDate_Begin=m.get("updateDate_Begin");
 			String updateDate_End=m.get("updateDate_End");
-			Session session = HibernateUtil.currentSession();
 			if(loginName!=null&&!loginName.equals("")){
 				HQL=HQL.append(" AND u.loginName like '%"+loginName+"%'" );
 			}
@@ -164,20 +162,16 @@ public class UserDaoImpl implements UserDao {
 				HQL=HQL.append(" AND u.sex = '"+sex+"'" );
 			}
 			if(updateDate_Begin!=null&&!updateDate_Begin.equals("")){
-				HQL=HQL.append(" AND u.updateDate >= :updateDate_Begin ");
+				HQL=HQL.append(" AND u.updateDate >= "+util_Date.string2date(updateDate_Begin, util_Date.Format_date));
 			}
 			if(updateDate_End!=null&&!updateDate_End.equals("")){
-				HQL=HQL.append(" AND u.updateDate <= :updateDate_End" );
+				HQL=HQL.append(" AND u.updateDate <= "+util_Date.string2date(updateDate_End, util_Date.Format_date) );
 			}
-			
-			Query query=session.createQuery(HQL.toString());
-//			query.setDate("updateDate_Begin", updateDate_Begin);
-			
-			
-			query.setFirstResult(firstResult);//开始数量
-			query.setMaxResults(maxResults);//每页数
-			return query.list();
 		}
+		Query query=session.createQuery(HQL.toString());
+		query.setFirstResult(firstResult);//开始数量
+		query.setMaxResults(maxResults);//每页数
+		return query.list();
 	}
 	
 	public User getUser(Long id){

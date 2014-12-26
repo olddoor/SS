@@ -9,7 +9,7 @@ public interface UserDao {
 	public void save(User u)throws Exception ;
 	public void update(User u) throws Exception;
 	public void delete(User u) throws Exception;
-	public List<User> getUsers(Map<String,String> m);
+	public List<User> getUsers(Map<String,String> m) throws Exception;
 	/**
 	 * 符合条件的记录数
 	 */

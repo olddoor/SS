@@ -10,11 +10,11 @@ import java.util.Date;
  *
  */
 public class util_Date {
-	public static final SimpleDateFormat datetimeFormat = new SimpleDateFormat(
+	public static final SimpleDateFormat Format_datetime = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss");
-	public static final SimpleDateFormat dateFormat = new SimpleDateFormat(
+	public static final SimpleDateFormat Format_date = new SimpleDateFormat(
 			"yyyy-MM-dd");
-	public static final SimpleDateFormat timeFormat = new SimpleDateFormat(
+	public static final SimpleDateFormat Format_time = new SimpleDateFormat(
 			"HH:mm:ss");
 	public enum dillType {  
 	    DAY,HOUR,MIN,SEC
@@ -89,7 +89,7 @@ public class util_Date {
 //		System.out.println(starDate);
 		//系统当前年月日
 		Date now=new Date();
-		now=dateFormat.parse(dateFormat.format(now));
+		now=Format_date.parse(Format_date.format(now));
 		//如果起始日期等于或晚于今日
 		if(date.before(now)){
 			return "before";
@@ -112,11 +112,11 @@ public class util_Date {
 			dateTime+=":00";
 		}
 		//将传入时间转为date类型
-		Date date_Time=timeFormat.parse(dateTime);
+		Date date_Time=Format_time.parse(dateTime);
 		System.out.println(date_Time);
 		//系统当前时间
 		Date now=new Date();
-		now=timeFormat.parse(timeFormat.format(now));
+		now=Format_time.parse(Format_time.format(now));
 		System.out.println(now);
 		//如果起始日期等于或晚于今日
 		if(date_Time.before(now)){
