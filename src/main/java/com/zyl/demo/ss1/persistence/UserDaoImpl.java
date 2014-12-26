@@ -171,7 +171,7 @@ public class UserDaoImpl implements UserDao {
 			}
 			
 			Query query=session.createQuery(HQL.toString());
-			query.setDate("updateDate_Begin", updateDate_Begin);
+//			query.setDate("updateDate_Begin", updateDate_Begin);
 			
 			
 			query.setFirstResult(firstResult);//开始数量
