@@ -1,0 +1,39 @@
+    
+[{
+    "id":1,
+    "text":"基础信息静态",
+    "iconCls":"icon-save",
+    "children":[{
+    	"text":"人员管理",
+    	"checked":true,
+    	"attributes":{
+    	"url":"/jqueryJsp/userList.jsp"
+    	}
+    },{
+    	"text":"组织管理",
+    	"checked":true
+    },{
+    "text":"其他待定",
+    "state":"open",
+    "attributes":{
+    "url":"/demo/book/abc",
+    "price":100
+    },
+    "children":[{
+    "text":"PhotoShop",
+    "checked":true
+    },{
+    "id": 8,
+    "text":"Sub Bookds",
+    "state":"closed"
+    }]
+    }]
+    },{
+    "text":"任务管理待定",
+    "state":"closed",
+    "children":[{
+    "text":"Java"
+    },{
+    "text":"C#"
+    }]
+    }]

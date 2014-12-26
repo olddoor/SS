@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ss1
+Bundle-SymbolicName: ss1
+Bundle-Version: 1.0.0.qualifier
+Export-Package: com.zyl.demo.ss1.entity,
+ com.zyl.demo.ss1.persistence,
+ com.zyl.demo.ss1.service,
+ com.zyl.demo.ss1.servlet,
+ com.zyl.demo.util
