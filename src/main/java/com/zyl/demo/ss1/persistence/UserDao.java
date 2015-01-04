@@ -12,10 +12,11 @@ public interface UserDao {
 	public List<User> getUsers(Map<String,String> m) throws Exception;
 	/**
 	 * 符合条件的记录数
+	 * @throws Exception 
 	 */
 	//query返回的是个对象.所以这里返回值用包装类而非基本类型
-	public Long count(Map<String,String> m);
-	public Long count(String loginName, String userName,String cellNO);
+	public Long count(Map<String,String> m) throws Exception;
+	public Long count(String loginName, String userName,String cellNO) throws Exception;
 	public User getUser(Long id);
 	public User login(String loginName,String password);
 	public User exitsUser(String loginName);

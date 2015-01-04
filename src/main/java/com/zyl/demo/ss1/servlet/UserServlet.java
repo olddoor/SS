@@ -1,6 +1,7 @@
 package com.zyl.demo.ss1.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -53,8 +54,12 @@ public class UserServlet extends HttpServlet {
 				this.updateUser(request, response);
 			} else if (reqType.equals("delete")) {
 				this.deleteUser(request, response);
-			} else if (reqType.equals("select")) {
-				this.getUserList(request, response);//获取数据
+			} else if (reqType.equals("select")) {//获取数据
+				try {
+					this.getUserList(request, response);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/userList.jsp");
@@ -92,8 +97,12 @@ public class UserServlet extends HttpServlet {
 				this.updateUser(request, response);
 			} else if (reqType.equals("delete")) {
 				this.deleteUser(request, response);
-			} else if (reqType.equals("select")) {
-				this.getUserList(request, response);//获取数据
+			} else if (reqType.equals("select")) {//获取数据
+				try {
+					this.getUserList(request, response);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -165,39 +174,20 @@ public class UserServlet extends HttpServlet {
 	 * 查询所有用户
 	 * @param request
 	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
+	 * @throws Exception 
 	 */
 	@SuppressWarnings("null")
-	private void getUserList(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
+	private void getUserList(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		Map<String,String> m = new HashMap();
-//		String loginName=request.getParameter("loginName");
-//		String userName=request.getParameter("userName");
-//		String password=request.getParameter("password");
-//		String row=request.getParameter("rows");
-//		String page=request.getParameter("page");
-//		
-//		if(loginName!=null){
-//			m.put("loginName", loginName);
-//		}
-//		if(userName!=null){
-//			m.put("userName", userName);
-//		}
-//		if(password!=null){
-//			m.put("password", password);
-//		}
-//		if(row!=null){
-//			m.put("row", row);
-//		}
-//		if(page!=null){
-//			m.put("page", page);
-//		}
 		m=util_copy.httpReq_2_map(request);
 		Long total=userService.count(m);//记录数
-		List<User> us=userService.getUsers(m); //获取记录
+		List<User> us=new ArrayList();
+		try {
+			us = userService.getUsers(m);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} //获取记录
 		String json=this.grid(response, us, total,true);
-//		request.setAttribute("count", String.valueOf(count));
-//		request.setAttribute("us", us);
 	}
 	/**
 	 * 

@@ -8,6 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>用户管理</title>
 <script type="text/javascript">
+
 	var grid; //数据表格
 	//定义datagrid 数据表格
 	$(function() { //待dom都加载完毕后,进行easyui相关初始化
@@ -32,11 +33,21 @@
 				title : '登录名',
 				width : 100
 			}, {
+				field : 'userName',
+				title : '用户名',
+				width : 100
+			}, {
 				field : 'password',
 				title : '密码',
 				width : 100,
 				align : 'left'
 			},  {
+				field : 'cellNO',
+				title : '电话号码',
+				width : 100,
+				align : 'left'
+			}, 
+			{
 				width : '50',
 				title : '性别',
 				field : 'sex',
@@ -71,6 +82,21 @@
 		});
 	$("#d12").css({'height':'10px','border-spacing':'0px 10px'});
 	});
+	
+	//相关操作按钮
+		var addFun = function() {
+			//在当前窗口的父窗口打开一个窗口
+		var dialog = parent.sy.modalDialog({
+			title : '添加用户信息',
+			url : myJSContext.contextPath + '/jqueryJsp/addUser.jsp',
+			buttons : [ {
+				text : '添加',
+				handler : function() {
+					dialog.find('iframe').get(0).contentWindow.submitForm(dialog, grid, parent.$);
+				}
+			} ]
+		});
+	};
 </script>
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
@@ -84,11 +110,13 @@
 						<table>
 							<tr>
 								<td>登录名</td>
-								<td><input name="loginName"/></td>
-								<td>姓名</td>
-								<td><input name="userName" style="width: 80px;"  /></td>
+								<td><input name="loginName" style="width: 60px;"></td>
+								<td>用户名</td>
+								<td><input name="userName" style="width: 60px;"  /></td>
+								<td>电话号码</td>
+								<td><input name="cellNO" style="width: 85px;"  /></td>
 								<td>性别</td>
-								<td><select name="sex" class="easyui-combobox"
+								<td><select name="sex" class="easyui-combobox" style="width: 70px;"
 									data-options="panelHeight:'auto',editable:false"><option
 											value="">请选择</option>
 										<option value="1">男</option>
@@ -97,10 +125,10 @@
 								<input name="reqType" value="select" id="reqType" type="hidden"/>
 								<td><input name="updateDate_Begin" class="Wdate"
 									onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
-									readonly="readonly" style="width: 120px;" />-<input
+									readonly="readonly" style="width: 110px;" />-<input
 									name="updateDate_End" class="Wdate"
 									onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
-									readonly="readonly" style="width: 120px;" /></td>
+									readonly="readonly" style="width: 110px;" /></td>
 								<td><a href="javascript:void(0);" class="easyui-linkbutton"
 									data-options="iconCls:'ext-icon-zoom',plain:true"
 									onclick="grid.datagrid('load',sy.serializeObject($('#searchForm')));">过滤</a>

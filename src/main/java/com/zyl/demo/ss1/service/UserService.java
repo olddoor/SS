@@ -10,7 +10,7 @@ public interface UserService {
 	public void save(User u)throws Exception;
 	public void update(User u)throws Exception ;
 	public void delete(User u)throws Exception ;
-	public List<User> getUsers(Map<String,String> m);
+	public List<User> getUsers(Map<String,String> m) throws Exception;
 	public User login(String loginName,String password);
 	public User exitsUser(String loginName);
 	/**
@@ -20,13 +20,15 @@ public interface UserService {
 	 * @param firstResult 开始页数
 	 * @param fetchSize	每页数量
 	 * @return
+	 * @throws Exception 
 	 */
-	public List<User> getUsers(String loginName, String userName,String cellNO,String firstResult,String maxResults);
+	public List<User> getUsers(String loginName, String userName,String cellNO,String firstResult,String maxResults) throws Exception;
 	/**
 	 * 符合条件的记录数
+	 * @throws Exception 
 	 */
-	public Long count(Map<String,String> m);
-	public Long count(String loginName, String userName,String cellNO);
+	public Long count(Map<String,String> m) throws Exception;
+	public Long count(String loginName, String userName,String cellNO) throws Exception;
 	public User getUser(Long id);
 
 }

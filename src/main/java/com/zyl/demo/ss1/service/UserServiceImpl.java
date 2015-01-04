@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 		userDao.delete(u);
 	}
 
-	public List<User> getUsers(Map<String, String> m) {
+	public List<User> getUsers(Map<String, String> m) throws Exception {
 		List<User> us = new ArrayList<User>();
 		if(m==null||m.equals("")){
 			 us=userDao.getUsers(null);
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 		return us;
 	}
 	
-	public Long count (Map<String, String> m){
+	public Long count (Map<String, String> m) throws Exception{
 		return userDao.count(m);
 	}
 	
@@ -53,14 +53,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Long count(String loginName, String userName, String cellNO) {
+	public Long count(String loginName, String userName, String cellNO) throws Exception {
 		return userDao.count(loginName,userName,cellNO);
 	}
 
 
 	@Override
 	public List<User> getUsers(String loginName, String userName,
-			String cellNO, String firstResult, String maxResults) {
+			String cellNO, String firstResult, String maxResults) throws Exception {
 		Map<String, String> m=new HashMap<String ,String>();
 		m.put("loginName", loginName);
 		m.put("userName", userName);

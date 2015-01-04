@@ -5,9 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.TemporalType;
+
+import org.apache.commons.lang3.time.DateUtils;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.type.StandardBasicTypes;
 
 import com.zyl.demo.ss1.entity.User;
 import com.zyl.demo.util.HibernateUtil;
@@ -69,7 +74,7 @@ public class UserDaoImpl implements UserDao {
 		}
 	}
 	
-	public Long count(String loginName, String userName,String cellNO){
+	public Long count(String loginName, String userName,String cellNO) throws Exception{
 		Map<String, String> m=new HashMap<String ,String>();
 		m.put("loginName", loginName);
 		m.put("userName", userName);
@@ -81,42 +86,74 @@ public class UserDaoImpl implements UserDao {
 	 * 获取条件的记录数
 	 * @param m
 	 * @return Integer
+	 * @throws Exception 
 	 */
-	public Long count(Map<String, String> m){
+	/*
+	 * 参数名传递方式,从而避免查询对数据库的依赖
+	 * 使用：冒号(:) + 参数名，设置参数名
+	 * 例如： select id, name from Student where name like :myname
+	 */
+	public Long count(Map<String, String> m) throws Exception{
 		StringBuffer HQL=new StringBuffer(" select count(*) from User u WHERE 1=1");
-		if(m==null||m.equals("")){
-			Session session = HibernateUtil.currentSession(); 
-			Query query=session.createQuery(HQL.toString());
-			return (Long) query.uniqueResult();
-		}else{
+		Session session = HibernateUtil.currentSession(); 
+		Query query=null;
 			String loginName=m.get("loginName");
 			String userName=m.get("userName");
 			String cellNO=m.get("cellNO");
 			String sex=m.get("sex");
 			String updateDate_Begin=m.get("updateDate_Begin");
 			String updateDate_End=m.get("updateDate_End");
-			Session session = HibernateUtil.currentSession();
+			
 			if(loginName!=null&&!loginName.equals("")){
-				HQL=HQL.append(" AND u.loginName like '%"+loginName+"%'" );
+				HQL=HQL.append(" AND u.loginName like :loginName" );
 			}
 			if(userName!=null&&!userName.equals("")){
-				HQL=HQL.append(" AND u.userName like '%"+userName+"%'" );
+				HQL=HQL.append(" AND u.userName like :userName" );
 			}
 			if(cellNO!=null&&!cellNO.equals("")){
-				HQL=HQL.append(" AND u.cellNO like '%"+cellNO+"%'" );
+				HQL=HQL.append(" AND u.cellNO like :cellNO " );
 			}
 			if(sex!=null&&!sex.equals("")){
-				HQL=HQL.append(" AND u.sex = '"+sex+"'" );
+				HQL=HQL.append(" AND u.sex = :sex" );
 			}
 			if(updateDate_Begin!=null&&!updateDate_Begin.equals("")){
-				HQL=HQL.append(" AND to_char(u.updateDate,'yyyy-mm-dd') > '"+updateDate_Begin+"'" );
+				HQL=HQL.append(" AND u.updateDate >= :updateDate_Begin " );
 			}
 			if(updateDate_End!=null&&!updateDate_End.equals("")){
-				HQL=HQL.append(" AND to_char(u.updateDate,'yyyy-mm-dd)' < '"+updateDate_End+"'" );
+				HQL=HQL.append(" AND u.updateDate <= :updateDate_End " );
 			}
-			Query query=session.createQuery(HQL.toString());
-			return (Long) query.uniqueResult();
-		}
+			
+			query=session.createQuery(HQL.toString());
+			
+			if(loginName!=null&&!loginName.equals("")){
+				query.setParameter("loginName", "%"+loginName+"%");
+			}
+			if(userName!=null&&!userName.equals("")){
+				query.setParameter("userName", "%"+userName+"%");
+			}
+			if(cellNO!=null&&!cellNO.equals("")){
+				query.setParameter("cellNO", "%"+cellNO+"%");
+			}
+			if(sex!=null&&!sex.equals("")){
+				query.setParameter("sex", sex);
+			}
+			/*
+			 * setParameter()方法包含三个参数，分别是命名参数名称，命名参数实际值，以及命名参数映射类型。对于某些参数类型
+			 * setParameter
+			 * ()方法可以更具参数值的Java类型，猜测出对应的映射类型，因此这时不需要显示写出映射类型，像上面的例子，可以直接这样写：
+			 * query.setParameter(“customername”,name);但是对于一些类型就必须写明映射类型，比如
+			 * java.util.Date类型，因为它会对应Hibernate的多种映射类型，比如Hibernate.DATA或者
+			 * Hibernate.TIMESTAMP。
+			 */
+			if(updateDate_Begin!=null&&!updateDate_Begin.equals("")){
+				query.setParameter("updateDate_Begin", util_Date.string2date(updateDate_Begin, util_Date.Format_date), 
+						StandardBasicTypes.DATE);
+			}
+			if(updateDate_End!=null&&!updateDate_End.equals("")){
+				query.setParameter("updateDate_End", util_Date.string2date(updateDate_End, util_Date.Format_date), 
+						StandardBasicTypes.DATE);
+			}
+		return (Long) query.uniqueResult();
 	}
 	
 
@@ -141,34 +178,64 @@ public class UserDaoImpl implements UserDao {
 		}
 		StringBuffer HQL=new StringBuffer("  from User u WHERE 1=1");
 		Session session = HibernateUtil.currentSession(); 
-		if(m==null||m.equals("")){
-		}else{
-			String loginName=m.get("loginName");
-			String userName=m.get("userName");
-			String cellNO=m.get("cellNO");
-			String sex=m.get("sex");
-			String updateDate_Begin=m.get("updateDate_Begin");
-			String updateDate_End=m.get("updateDate_End");
-			if(loginName!=null&&!loginName.equals("")){
-				HQL=HQL.append(" AND u.loginName like '%"+loginName+"%'" );
-			}
-			if(userName!=null&&!userName.equals("")){
-				HQL=HQL.append(" AND u.userName like '%"+userName+"%'" );
-			}
-			if(cellNO!=null&&!cellNO.equals("")){
-				HQL=HQL.append(" AND u.cellNO like '%"+cellNO+"%'" );
-			}
-			if(sex!=null&&!sex.equals("")){
-				HQL=HQL.append(" AND u.sex = '"+sex+"'" );
-			}
-			if(updateDate_Begin!=null&&!updateDate_Begin.equals("")){
-				HQL=HQL.append(" AND u.updateDate >= "+util_Date.string2date(updateDate_Begin, util_Date.Format_date));
-			}
-			if(updateDate_End!=null&&!updateDate_End.equals("")){
-				HQL=HQL.append(" AND u.updateDate <= "+util_Date.string2date(updateDate_End, util_Date.Format_date) );
-			}
+		
+		String loginName=m.get("loginName");
+		String userName=m.get("userName");
+		String cellNO=m.get("cellNO");
+		String sex=m.get("sex");
+		String updateDate_Begin=m.get("updateDate_Begin");
+		String updateDate_End=m.get("updateDate_End");
+		if(loginName!=null&&!loginName.equals("")){
+			HQL=HQL.append(" AND u.loginName like :loginName" );
 		}
+		if(userName!=null&&!userName.equals("")){
+			HQL=HQL.append(" AND u.userName like :userName" );
+		}
+		if(cellNO!=null&&!cellNO.equals("")){
+			HQL=HQL.append(" AND u.cellNO like :cellNO " );
+		}
+		if(sex!=null&&!sex.equals("")){
+			HQL=HQL.append(" AND u.sex = :sex" );
+		}
+		if(updateDate_Begin!=null&&!updateDate_Begin.equals("")){
+			HQL=HQL.append(" AND u.updateDate >= :updateDate_Begin " );
+		}
+		if(updateDate_End!=null&&!updateDate_End.equals("")){
+			HQL=HQL.append(" AND u.updateDate <= :updateDate_End " );
+		}
+		
 		Query query=session.createQuery(HQL.toString());
+		
+		if(loginName!=null&&!loginName.equals("")){
+			query.setParameter("loginName", "%"+loginName+"%");
+		}
+		if(userName!=null&&!userName.equals("")){
+			query.setParameter("userName", "%"+userName+"%");
+		}
+		if(cellNO!=null&&!cellNO.equals("")){
+			query.setParameter("cellNO", "%"+cellNO+"%");
+		}
+		if(sex!=null&&!sex.equals("")){
+			query.setParameter("sex", sex);
+		}
+		/*
+		 * setParameter()方法包含三个参数，分别是命名参数名称，命名参数实际值，以及命名参数映射类型。对于某些参数类型
+		 * setParameter
+		 * ()方法可以更具参数值的Java类型，猜测出对应的映射类型，因此这时不需要显示写出映射类型，像上面的例子，可以直接这样写：
+		 * query.setParameter(“customername”,name);但是对于一些类型就必须写明映射类型，比如
+		 * java.util.Date类型，因为它会对应Hibernate的多种映射类型，比如Hibernate.DATA或者
+		 * Hibernate.TIMESTAMP。
+		 */
+		if(updateDate_Begin!=null&&!updateDate_Begin.equals("")){
+			query.setParameter("updateDate_Begin", util_Date.string2date(updateDate_Begin, util_Date.Format_date), 
+					StandardBasicTypes.DATE);
+//			query.setDate("updateDate_Begin", util_Date.string2date(updateDate_Begin, util_Date.Format_date));
+		}
+		if(updateDate_End!=null&&!updateDate_End.equals("")){
+			query.setParameter("updateDate_End", util_Date.string2date(updateDate_End, util_Date.Format_date), 
+					StandardBasicTypes.DATE);
+//			query.setDate("updateDate_End", util_Date.string2date(updateDate_End, util_Date.Format_date));
+		}
 		query.setFirstResult(firstResult);//开始数量
 		query.setMaxResults(maxResults);//每页数
 		return query.list();
