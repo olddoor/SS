@@ -1,6 +1,7 @@
 package com.zyl.demo.ss1.servlet;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import com.zyl.demo.ss1.Exception.login_Exception;
 import com.zyl.demo.ss1.entity.Grid;
 import com.zyl.demo.ss1.entity.SessionInfo;
 import com.zyl.demo.ss1.entity.User;
+import com.zyl.demo.ss1.entity.msgStr;
 import com.zyl.demo.ss1.service.UserService;
 import com.zyl.demo.ss1.service.UserServiceImpl;
 import com.zyl.demo.util.JsonUtils;
@@ -38,6 +40,33 @@ public class UserServlet extends HttpServlet {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	@Override 
+	protected void service(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		request.setCharacterEncoding("UTF-8");
+		String reqType = request.getParameter("reqType");
+		msgStr msg=new msgStr();
+		try {
+			if (reqType != null && !reqType.equals("")) {
+				if (reqType.equals("reg")) {
+					this.addUser(request, response);
+				} else if (reqType.equals("update")) {
+					this.updateUser(request, response);
+				} else if (reqType.equals("delete")) {
+					this.deleteUser(request, response);
+				} else if (reqType.equals("select")) { //获取数据
+					this.getUserList(request, response);
+				}
+			}
+			msg.setSuccess(true);
+		} catch (Exception e) {
+			msg.setSuccess(false);
+			msg.setMsgDetail(e.getMessage());
+		}
+		String str=JsonUtils.toJSONString(msg);
+		JsonUtils.write(response, str);
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -45,25 +74,7 @@ public class UserServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		String reqType = request.getParameter("reqType");
-		if (reqType != null && !reqType.equals("")) {
-			if (reqType.equals("reg")) {
-				this.addUser(request, response);
-			} else if (reqType.equals("update")) {
-				this.updateUser(request, response);
-			} else if (reqType.equals("delete")) {
-				this.deleteUser(request, response);
-			} else if (reqType.equals("select")) {//获取数据
-				try {
-					this.getUserList(request, response);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/userList.jsp");
-		dispatcher.forward(request, response);
+		
 	}
 
 	/**
@@ -71,40 +82,7 @@ public class UserServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		String reqType = request.getParameter("reqType");
-		if (reqType != null && !reqType.equals("")) {
-			if (reqType.equals("login")) {
-				User u=null;
-				try {
-					u=this.login(request, response);
-				} catch (login_Exception e) {
-					//登录失败
-					e.printStackTrace();
-					request.setAttribute("msg",e.getMessage());
-					RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
-					dispatcher.forward(request, response);
-				}
-				request.getSession().setAttribute("user", u);
-				SessionInfo info= new SessionInfo();
-				info.setUser(u);
-				request.getSession().setAttribute("SessionInfo", info);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/main.jsp");
-				dispatcher.forward(request, response);
-			} else if (reqType.equals("reg")) {
-				this.addUser(request, response);
-			} else if (reqType.equals("update")) {
-				this.updateUser(request, response);
-			} else if (reqType.equals("delete")) {
-				this.deleteUser(request, response);
-			} else if (reqType.equals("select")) {//获取数据
-				try {
-					this.getUserList(request, response);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		
 	}
 
 	private User login(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException,login_Exception{
@@ -136,8 +114,7 @@ public class UserServlet extends HttpServlet {
 			u.setUserName(request.getParameter("userName"));
 			userService.save(u);
 		} catch (Exception e) {
-			request.setAttribute("message", e.getMessage());
-			request.getRequestDispatcher("addUser.jsp").forward(request,response);
+			e.printStackTrace();
 		}
 	}
 
@@ -152,13 +129,14 @@ public class UserServlet extends HttpServlet {
 				u.setUserName(request.getParameter("userName"));
 				userService.update(u);
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	private void deleteUser(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
-		   try {
+
+	private void deleteUser(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		try {
 			String id = request.getParameter("id");
 			Long id1 = Long.valueOf(id);
 			User u = userService.getUser(id1);
@@ -167,7 +145,6 @@ public class UserServlet extends HttpServlet {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			request.setAttribute("status", e.getMessage());
 		}
 	}
 	/**
@@ -187,24 +164,11 @@ public class UserServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} //获取记录
-		String json=this.grid(response, us, total,true);
-	}
-	/**
-	 * 
-	 * @param list
-	 * @param write是否直接写输出流
-	 * @return
-	 * @throws IOException 
-	 */
-	public String grid(HttpServletResponse response,List list,long total,boolean write) throws IOException{
 		Grid grid = new Grid();
 		grid.setTotal(Long.valueOf(total));
-		grid.setRows(list);
-		String json=JsonUtils.obj2Json_ByFilter(grid, null, null, null, null);
-		if(write){
-			grid.write(response, json);
-		}
-		return json;
+		grid.setRows(us);
+		String str=JsonUtils.toJSONString(grid);
+		JsonUtils.write(response, str);
 	}
 	
 	

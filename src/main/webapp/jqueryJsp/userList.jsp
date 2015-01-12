@@ -83,7 +83,10 @@
 	$("#d12").css({'height':'10px','border-spacing':'0px 10px'});
 	});
 	
-	//相关操作按钮
+
+	/**
+			相关操作按钮
+	**/
 		var addFun = function() {
 			//在当前窗口的父窗口打开一个窗口
 		var dialog = parent.sy.modalDialog({
@@ -92,10 +95,17 @@
 			buttons : [ {
 				text : '添加',
 				handler : function() {
-					dialog.find('iframe').get(0).contentWindow.submitForm(dialog, grid, parent.$);
+					//即调用SyuserForm.jsp的submitForm方法
+					dialog.find('iframe').get(0).contentWindow.submitNow(dialog, grid, parent.$);
+				}
+			},{
+				text : '重置',
+				handler : function() {
+					dialog.find('iframe').get(0).contentWindow.reset();
 				}
 			} ]
-		});
+		},'400','450');
+		
 	};
 </script>
 </head>
@@ -120,7 +130,7 @@
 									data-options="panelHeight:'auto',editable:false"><option
 											value="">请选择</option>
 										<option value="1">男</option>
-										<option value="0">女</option></select></td>
+										<option value="0">女</option></td>
 								<td>创建时间</td>
 								<input name="reqType" value="select" id="reqType" type="hidden"/>
 								<td><input name="updateDate_Begin" class="Wdate"

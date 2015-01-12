@@ -21,6 +21,7 @@
 
 <!-- 自定义工具js -->
 <script type="text/javascript" src="<%=contextPath%>/jslib/jsPlugin/util/syExtJquery.js" charset="utf-8"></script>
+<script type="text/javascript" src="<%=contextPath%>/jslib/jsPlugin/util/syExtEasyUI.js" charset="utf-8"></script>
 <%-- 引入my97日期时间控件 --%>
 <script type="text/javascript" src="<%=contextPath%>/jslib/jsPlugin/My97DatePicker4.8Beta3/My97DatePicker/WdatePicker.js" charset="utf-8"></script>
 

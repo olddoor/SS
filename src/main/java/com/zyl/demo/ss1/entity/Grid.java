@@ -29,11 +29,4 @@ public class Grid {
 	public void setRows(List rows) {
 		this.rows = rows;
 	}
-	
-	public void write(HttpServletResponse response,String json) throws IOException{
-		response.setContentType("text/html;charset=utf-8");
-		response.getWriter().write(json);
-		response.getWriter().flush();
-		response.getWriter().close();
-	}
 }

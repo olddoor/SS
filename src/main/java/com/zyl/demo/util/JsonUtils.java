@@ -3,6 +3,8 @@ package com.zyl.demo.util;
 import java.io.IOException;
 import java.util.Arrays;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -15,7 +17,7 @@ import com.zyl.demo.util.fastjson.FastjsonFilter;
  * @author Z10
  *
  */
-public class JsonUtils {
+public class JsonUtils  {
 	/**
 	 * 将对象转换成JSON字符串，并响应回前台
 	 * 基于fastjson进行json及bean的转换
@@ -29,7 +31,7 @@ public class JsonUtils {
 	 * 范例:getRequest().getHeader("User-Agent");
 	 * @return 
 	 */
-	public static String obj2Json_ByFilter(Object object, String[] includesProperties, String[] excludesProperties,Logger logger,String User_Agent) {
+	public static String obj2Str_ByFilter(Object object, String[] includesProperties, String[] excludesProperties,Logger logger,String User_Agent) {
 		FastjsonFilter filter = new FastjsonFilter();// excludes优先于includes
 		if (excludesProperties != null && excludesProperties.length > 0) {
 			filter.getExcludes().addAll(Arrays.<String> asList(excludesProperties));
@@ -49,15 +51,33 @@ public class JsonUtils {
 			// 使用SerializerFeature.DisableCircularReferenceDetect特性关闭引用检测和生成
 			json = JSON.toJSONString(object, filter, SerializerFeature.WriteDateUseDateFormat, SerializerFeature.DisableCircularReferenceDetect);
 		}
-		//logger.info("转换后的JSON字符串：" + json);
-//			getResponse().setContentType("text/html;charset=utf-8");
-//			getResponse().getWriter().write(json);
-//			getResponse().getWriter().flush();
-//			getResponse().getWriter().close();
 		return json;
 	}
-	public <T> T  json2obj(JSON json,Class<T> clazz){
-		return JSON.toJavaObject(json, clazz);
+	
+	
+	
+	//obj2str 序列化
+	public static String toJSONString(Object o){
+		return JSON.toJSONString(o);
+	}
+	
+	//str2obj 反序列化：
+	public static <T> T parseObject(String str ,Class<T> clazz){
+		return parseObject(str,clazz);
+	}
+			
+	
+	/**
+	 * 用输出流将传入的String json输出
+	 * @param response
+	 * @param json
+	 * @throws IOException
+	 */
+	public static void write(HttpServletResponse response,String str) throws IOException{
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().write(str);
+		response.getWriter().flush();
+		response.getWriter().close();
 	}
 
 }
