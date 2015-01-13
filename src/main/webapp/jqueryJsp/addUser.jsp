@@ -42,13 +42,14 @@
 		} else {
 			url = url+"?reqType=reg";//新增
 		}
-		console.log("url"+url);
-		console.log("sy.serializeObject($('form'))="+sy.serializeObject($('form')));
-		$.post(url,{loginName: "post", password: "lulu"},function(result){
+		$.post(url,sy.serializeObject($('form')),function(result){
 			if (result.success) {
 				$pjq.messager.alert('提示', result.msg, 'info');
+				$grid.datagrid('load'); //grid重新刷新
+				$dialog.dialog('destroy');//关闭之前的新增/修改窗口
+			}else{
+				$pjq.messager.alert('提示', result.msg, 'error');
 			}
-			console.log("11111 result"+result);
 		},'json');
 	};
 	
@@ -77,7 +78,7 @@ $(function() {
 			</tr>
 			<tr>
 					<td>性 别</td>
-					<td><select class="easyui-combobox" name="data.sex"
+					<td><select class="easyui-combobox" name="sex"
 						data-options="panelHeight:'auto',editable:false ,required:true"
 						style="width: 145px;">
 							<option value="1">男</option>
@@ -85,7 +86,7 @@ $(function() {
 					</select></td>
 			</tr><tr>
 					<td>电话号码</td>
-					<td><input class="easyui-textbox" name="password2" /></td>
+					<td><input class="easyui-textbox" name="cellNO"/></td>
 			</tr>
 			</table>		
 	</fieldset>

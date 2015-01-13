@@ -162,6 +162,8 @@ public class UserDaoImpl implements UserDao {
 	public List<User> getUsers(Map<String, String> m) throws Exception {
 		int maxResults=10;
 		int firstResult=0;
+		String order="desc";
+		String sort="id";
 		if(m!=null&&!m.isEmpty()){
 			if(m.get("row")!=null){ //每页数量
 				String maxResults_Str = m.get("row");
@@ -174,6 +176,12 @@ public class UserDaoImpl implements UserDao {
 				if (page != null && !page.equals("")){
 					firstResult=(Integer.valueOf(page).intValue()-1)*maxResults;  //从第几个开始取数
 				}
+			}
+			if(m.get("sort")!=null){
+				sort=m.get("sort");
+			}
+			if(m.get("order")!=null){
+				order=m.get("order");
 			}
 		}
 		StringBuffer HQL=new StringBuffer("  from User u WHERE 1=1");
@@ -203,6 +211,7 @@ public class UserDaoImpl implements UserDao {
 		if(updateDate_End!=null&&!updateDate_End.equals("")){
 			HQL=HQL.append(" AND u.updateDate <= :updateDate_End " );
 		}
+		HQL=HQL.append(" order by "+sort+" "+order);
 		
 		Query query=session.createQuery(HQL.toString());
 		
@@ -229,12 +238,10 @@ public class UserDaoImpl implements UserDao {
 		if(updateDate_Begin!=null&&!updateDate_Begin.equals("")){
 			query.setParameter("updateDate_Begin", util_Date.string2date(updateDate_Begin, util_Date.Format_date), 
 					StandardBasicTypes.DATE);
-//			query.setDate("updateDate_Begin", util_Date.string2date(updateDate_Begin, util_Date.Format_date));
 		}
 		if(updateDate_End!=null&&!updateDate_End.equals("")){
 			query.setParameter("updateDate_End", util_Date.string2date(updateDate_End, util_Date.Format_date), 
 					StandardBasicTypes.DATE);
-//			query.setDate("updateDate_End", util_Date.string2date(updateDate_End, util_Date.Format_date));
 		}
 		query.setFirstResult(firstResult);//开始数量
 		query.setMaxResults(maxResults);//每页数

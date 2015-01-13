@@ -27,15 +27,18 @@
 			columns : [ [ {
 				field : 'id',
 				title : 'ID',
-				width : 100
+				width : 100,
+				sortable :true
 			}, {
 				field : 'loginName',
 				title : '登录名',
-				width : 100
+				width : 100,
+				sortable :true
 			}, {
 				field : 'userName',
 				title : '用户名',
-				width : 100
+				width : 100,
+				sortable :true
 			}, {
 				field : 'password',
 				title : '密码',
@@ -45,7 +48,8 @@
 				field : 'cellNO',
 				title : '电话号码',
 				width : 100,
-				align : 'left'
+				align : 'left',
+				sortable :true
 			}, 
 			{
 				width : '50',
@@ -76,7 +80,8 @@
 				field : 'updateDate',
 				title : '更新时间',
 				width : 150,
-				align : 'left'
+				align : 'left',
+				sortable :true
 			} ] ],
 			toolbar : '#toolbar'
 		});

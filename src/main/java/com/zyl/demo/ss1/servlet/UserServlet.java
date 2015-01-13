@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.zyl.demo.ss1.Exception.login_Exception;
 import com.zyl.demo.ss1.entity.Grid;
@@ -49,6 +50,13 @@ public class UserServlet extends HttpServlet {
 		msgStr msg=new msgStr();
 		try {
 			if (reqType != null && !reqType.equals("")) {
+				if(reqType.equals("login")) {
+					User u=this.login(request, response);
+					HttpSession session =request.getSession();
+					session.setAttribute("user", u);
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/main.jsp");
+					dispatcher.forward(request, response);
+				}
 				if (reqType.equals("reg")) {
 					this.addUser(request, response);
 				} else if (reqType.equals("update")) {
@@ -60,9 +68,10 @@ public class UserServlet extends HttpServlet {
 				}
 			}
 			msg.setSuccess(true);
+			msg.setMsg("操作成功");
 		} catch (Exception e) {
 			msg.setSuccess(false);
-			msg.setMsgDetail(e.getMessage());
+			msg.setMsg(e.getMessage());
 		}
 		String str=JsonUtils.toJSONString(msg);
 		JsonUtils.write(response, str);
@@ -112,6 +121,8 @@ public class UserServlet extends HttpServlet {
 			u.setPassword(request.getParameter("password"));
 			u.setUpdateDate(new Date());
 			u.setUserName(request.getParameter("userName"));
+			u.setCellNO(request.getParameter("cellNO"));
+			u.setSex(request.getParameter("sex"));
 			userService.save(u);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -167,7 +178,8 @@ public class UserServlet extends HttpServlet {
 		Grid grid = new Grid();
 		grid.setTotal(Long.valueOf(total));
 		grid.setRows(us);
-		String str=JsonUtils.toJSONString(grid);
+		
+		String str=JsonUtils.obj2Str_ByFilter(grid, null, null, null, null);//含时间格式化
 		JsonUtils.write(response, str);
 	}
 	
