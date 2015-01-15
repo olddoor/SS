@@ -7,6 +7,7 @@
 	var myJSContext = myJSContext || {};  //a == undefined 或 a == null时候，取b的值，否则取a的值
 	myJSContext.contextPath = '<%=contextPath%>';
 	myJSContext.basePath = '<%=basePath%>';
+	myJSContext.pixel_0 = '<%=contextPath%>/jslib/style/images/pixel_0.gif';//0像素的背景，一般用于占位. 解决img不设置src而用css设置背景图片时,ie加载后出现图标的问题.
 </script>
 <%
 	//String easyuiTheme = "default";//指定如果用户未选择样式，那么初始化一个默认样式
@@ -19,6 +20,11 @@
 <script type="text/javascript" src="<%=contextPath%>/jslib/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/jslib/easyui/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
 
+
+<%-- 引入扩展图标 --%>
+<link rel="stylesheet" href="<%=contextPath%>/jslib/style/syExtIcon.css" type="text/css">
+<%-- 引入自定义样式 --%>
+<link rel="stylesheet" href="<%=contextPath%>/jslib/style/syExtCss.css" type="text/css">
 <!-- 自定义工具js -->
 <script type="text/javascript" src="<%=contextPath%>/jslib/jsPlugin/util/syExtJquery.js" charset="utf-8"></script>
 <script type="text/javascript" src="<%=contextPath%>/jslib/jsPlugin/util/syExtEasyUI.js" charset="utf-8"></script>
@@ -28,9 +34,3 @@
 <%-- 引入easyui扩展 --%>
 <script src="<%=contextPath%>/jslib/syExtEasyUI.js" type="text/javascript" charset="utf-8"></script>
 
-
-
-<%-- 引入扩展图标 --%>
-<link rel="stylesheet" href="<%=contextPath%>/jslib/style/syExtIcon.css" type="text/css">
-<%-- 引入自定义样式 --%>
-<link rel="stylesheet" href="<%=contextPath%>/jslib/style/syExtCss.css" type="text/css">

@@ -227,5 +227,5 @@ $.ajaxSetup({
  * @requires jQuery
  */
 $(function() {
-	$('.iconImg').attr('src', sy.pixel_0);
+	$('.iconImg').attr('src', myJSContext.pixel_0);
 });

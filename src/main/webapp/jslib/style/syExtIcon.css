@@ -1636,9 +1636,11 @@ img {	cursor: pointer; }
 
 .ext-icon-newspaper_link {	background: url('images/ext_icons/newspaper/newspaper_link.png') no-repeat ; }
 
-.ext-icon-note {	background: url('images/ext_icons/notes/note.png') no-repeat ; }
+.ext-icon-note {	background: url('images/ext_icons/notes/note.png') no-repeat ; border:none; 
+}
 
-.ext-icon-note_add {	background: url('images/ext_icons/notes/note_add.png') no-repeat ; }
+.ext-icon-note_add {	background: url('images/ext_icons/notes/note_add.png') no-repeat ; border:none; 
+}
 
 .ext-icon-note_delete {	background: url('images/ext_icons/notes/note_delete.png') no-repeat ; }
 

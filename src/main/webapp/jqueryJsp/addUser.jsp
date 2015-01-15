@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
 <%
 	String contextPath = request.getContextPath();
-	String id = request.getParameter("id");
-	if (id == null) {
-		id = "";
+	String uid = request.getParameter("uid");
+	if (uid == null) {
+		uid = "";
 	}
 %>
 <html>
@@ -55,10 +55,33 @@
 	
 	
 $(function() {
+	if ($(':input[name="data.id"]').val().length > 0) { //不为空需加载原数据
+		parent.$.messager.progress({
+			text : '数据加载中....'
+		});
+		$.post(sy.contextPath + '/base/syuser!getById.sy', {
+			id : $(':input[name="data.id"]').val()
+		}, function(result) {
+			if (result.id != undefined) {
+				$('form').form('load', {
+					'data.id' : result.id,
+					'data.name' : result.name,
+					'data.loginname' : result.loginname,
+					'data.sex' : result.sex,
+					'data.age' : result.age,
+					'data.photo' : result.photo
+				});
+				if (result.photo) {
+					$('#photo').attr('src', sy.contextPath + result.photo);
+				}
+			}
+			parent.$.messager.progress('close');
+		}, 'json');
+	}
 });
 </script>
 	<form  method="post" id="form" class="form">
-	<input name="data.id" value="<%=id%>" readonly="readonly" type="hidden"/>
+	<input name="data.id" value="<%=uid%>" readonly="readonly" type="hidden"/>
 	<fieldset>
 		<legend>用户信息</legend>
 		<table>
