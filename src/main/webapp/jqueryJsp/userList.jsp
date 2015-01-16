@@ -7,23 +7,66 @@
 <head>
 <title>用户管理</title>
 <script type="text/javascript">
-	//弹窗显示
+
+
+	/**
+	相关操作按钮
+	 **/
+	var addFun = function() {
+		//在当前窗口的父窗口打开一个窗口
+		var dialog = parent.sy.modalDialog({
+			title : '添加用户信息',
+			url : myJSContext.contextPath + '/jqueryJsp/addUser.jsp',
+			buttons : [
+					{
+						text : '添加',
+						handler : function() {
+							//即调用SyuserForm.jsp的submitForm方法
+							dialog.find('iframe').get(0).contentWindow
+									.submitNow(dialog, grid, parent.$);
+						}
+					}, {
+						text : '重置',
+						handler : function() {
+							dialog.find('iframe').get(0).contentWindow.reset();
+						}
+					} ]
+		}, '400', '450');
+	};
+	//查看
 	var showFun = function(id) {
 		var dialog = parent.sy.modalDialog({
 			title : '查看用户信息',
 			url : myJSContext.contextPath + '/jqueryJsp/addUser.jsp?uid=' + id
-		}, '300', '350');
+		}, '400', '300');
 	};
+	//修改
+	var editFun = function(id) {
+		var dialog = parent.sy.modalDialog({
+			title : '修改用户信息',
+			url : myJSContext.contextPath + '/jqueryJsp/addUser.jsp?uid=' + id,
+			buttons : [ {
+				text : '保存',
+				handler : function() {
+					dialog.find('iframe').get(0).contentWindow.submitNow(
+							dialog, grid, parent.$);
+				}
+			}
+			]
+		}, '400', '300');
+	}
 
 	var grid; //数据表格
 
 	//定义datagrid 数据表格
 	$(function() { //待dom都加载完毕后,进行easyui相关初始化
 		//初始化datagrid
-		grid = $('#grid').datagrid({
+		grid = $('#grid')
+				.datagrid(
+						{
 							url : myJSContext.contextPath + '/userServlet',
 							queryParams : {
-								reqType : 'select'
+								reqType : 'selectAll'
 							},
 							rownumbers : true,//显示行数
 							singleSelect : true,//单选
@@ -102,11 +145,26 @@
 										width : '100',
 										formatter : function(value, row) {
 											var str = '';
-												str += sy.formatString('<img class="iconImg ext-icon-note" title="查看" onclick="showFun(\'{0}\');"/>', row.id);
-												str += sy.formatString('<img class="iconImg ext-icon-note_edit" title="编辑" onclick="editFun(\'{0}\');"/>', row.id);
-												str += sy.formatString('<img class="iconImg ext-icon-user" title="用户角色" onclick="grantRoleFun(\'{0}\');"/>', row.id);
-												str += sy.formatString('<img class="iconImg ext-icon-group" title="用户机构" onclick="grantOrganizationFun(\'{0}\');"/>', row.id);
-												str += sy.formatString('<img class="iconImg ext-icon-note_delete" title="删除" onclick="removeFun(\'{0}\');"/>', row.id);
+											str += sy
+													.formatString(
+															'<img class="iconImg ext-icon-note" title="查看" onclick="showFun(\'{0}\');"/>',
+															row.id);
+											str += sy
+													.formatString(
+															'<img class="iconImg ext-icon-note_edit" title="编辑" onclick="editFun(\'{0}\');"/>',
+															row.id);
+											str += sy
+													.formatString(
+															'<img class="iconImg ext-icon-user" title="用户角色" onclick="grantRoleFun(\'{0}\');"/>',
+															row.id);
+											str += sy
+													.formatString(
+															'<img class="iconImg ext-icon-group" title="用户机构" onclick="grantOrganizationFun(\'{0}\');"/>',
+															row.id);
+											str += sy
+													.formatString(
+															'<img class="iconImg ext-icon-note_delete" title="删除" onclick="removeFun(\'{0}\');"/>',
+															row.id);
 											return str;
 										}
 									} ] ],
@@ -126,32 +184,6 @@
 			'border-spacing' : '0px 10px'
 		});
 	});
-
-	/**
-			相关操作按钮
-	 **/
-	var addFun = function() {
-		//在当前窗口的父窗口打开一个窗口
-		var dialog = parent.sy.modalDialog({
-			title : '添加用户信息',
-			url : myJSContext.contextPath + '/jqueryJsp/addUser.jsp',
-			buttons : [
-					{
-						text : '添加',
-						handler : function() {
-							//即调用SyuserForm.jsp的submitForm方法
-							dialog.find('iframe').get(0).contentWindow
-									.submitNow(dialog, grid, parent.$);
-						}
-					}, {
-						text : '重置',
-						handler : function() {
-							dialog.find('iframe').get(0).contentWindow.reset();
-						}
-					} ]
-		}, '400', '450');
-
-	};
 </script>
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">

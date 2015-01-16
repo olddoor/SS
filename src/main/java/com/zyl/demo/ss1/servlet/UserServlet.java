@@ -42,7 +42,9 @@ public class UserServlet extends HttpServlet {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
+	/**
+	 * Servlet请求方法总入口
+	 */
 	@Override 
 	protected void service(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		request.setCharacterEncoding("UTF-8");
@@ -63,8 +65,11 @@ public class UserServlet extends HttpServlet {
 					this.updateUser(request, response);
 				} else if (reqType.equals("delete")) {
 					this.deleteUser(request, response);
-				} else if (reqType.equals("select")) { //获取数据
+				//获取数据
+				} else if (reqType.equals("selectAll")) { 
 					this.getUserList(request, response);
+				} else if (reqType.equals("selectUser")){
+					this.getUser(request, response);
 				}
 			}
 			msg.setSuccess(true);
@@ -185,12 +190,13 @@ public class UserServlet extends HttpServlet {
 	
 	
 	@SuppressWarnings("unused")
-	private void getUser(HttpServletRequest request,HttpServletResponse response){
+	private void getUser(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		String id=request.getParameter("id");
 		User u=null;
 		if(id!=null&&!id.equals("")){
 			u=userService.getUser(Long.valueOf(id));
 		}
-		request.setAttribute("user", u);
+		String str=JsonUtils.toJSONString(u);
+		JsonUtils.write(response, str);
 	}
 }

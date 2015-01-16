@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%
 	String contextPath = request.getContextPath();
+	out.println(contextPath);
 	String uid = request.getParameter("uid");
 	if (uid == null) {
 		uid = "";
@@ -36,8 +37,9 @@
 	}
 	//提交
 	var submitNow = function($dialog, $grid, $pjq) {
-		var url = myJSContext.contextPath + '/userServlet';
-		if ($(':input[name="data.id"]').val().length > 0) {
+		var url = '<%=contextPath%>'+'/userServlet';
+		alert(url);
+		if ($(':input[name="id"]').val().length > 0) {
 			url = url+"?reqType=update"; //更新
 		} else {
 			url = url+"?reqType=reg";//新增
@@ -55,25 +57,25 @@
 	
 	
 $(function() {
-	if ($(':input[name="data.id"]').val().length > 0) { //不为空需加载原数据
+	if ($(':input[name="id"]').val().length > 0) {
 		parent.$.messager.progress({
 			text : '数据加载中....'
 		});
-		$.post(sy.contextPath + '/base/syuser!getById.sy', {
-			id : $(':input[name="data.id"]').val()
+		$.post('<%=contextPath%>' + '/userServlet', {
+			id : $(':input[name="id"]').val(),
+			reqType:"selectUser"
 		}, function(result) {
 			if (result.id != undefined) {
 				$('form').form('load', {
 					'data.id' : result.id,
-					'data.name' : result.name,
-					'data.loginname' : result.loginname,
-					'data.sex' : result.sex,
-					'data.age' : result.age,
-					'data.photo' : result.photo
+					'userName' : result.userName,
+					'loginName' : result.loginName,
+					'password' : result.password,
+					'password2' : result.password,
+					'sex' : result.sex,
+					'cellNO' : result.cellNO
 				});
-				if (result.photo) {
-					$('#photo').attr('src', sy.contextPath + result.photo);
-				}
+				$("#password2").textbox("disable");
 			}
 			parent.$.messager.progress('close');
 		}, 'json');
@@ -81,7 +83,7 @@ $(function() {
 });
 </script>
 	<form  method="post" id="form" class="form">
-	<input name="data.id" value="<%=uid%>" readonly="readonly" type="hidden"/>
+	<input name="id" value="<%=uid%>" readonly="readonly" type="hidden"/>
 	<fieldset>
 		<legend>用户信息</legend>
 		<table>
@@ -91,13 +93,14 @@ $(function() {
 			</tr>
 			<tr>
 				<td>姓 名</td>
-				<td><input class="easyui-textbox"  name="userName" data-options="required:true"/></td>
+				<td><input class="easyui-textbox"   name="userName" data-options="required:true"/></td>
 			</tr>
 			<tr>
 				<td>密 码</td>
 				<td><input class="easyui-textbox" type="password" name="password" data-options="required:true"/></td>
-			</tr><tr>	<td>密码确认</td>
-				<td><input class="easyui-textbox"   type="password" name="password2" data-options="required:true"/></td>
+			</tr><tr>	
+			    <td>密码确认</td>
+				<td><input class="easyui-textbox"  id="password2" type="password" name="password2" data-options="required:true"/></td>
 			</tr>
 			<tr>
 					<td>性 别</td>
