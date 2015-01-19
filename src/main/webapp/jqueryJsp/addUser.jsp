@@ -38,7 +38,6 @@
 	//提交
 	var submitNow = function($dialog, $grid, $pjq) {
 		var url = '<%=contextPath%>'+'/userServlet';
-		alert(url);
 		if ($(':input[name="id"]').val().length > 0) {
 			url = url+"?reqType=update"; //更新
 		} else {

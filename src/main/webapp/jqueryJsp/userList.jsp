@@ -55,7 +55,24 @@
 			]
 		}, '400', '300');
 	}
+	//删除
+	var removeFun=function (id){
+		//窗口的父对象调用$.messager.confirm打开提示窗口
+		parent.$.messager.confirm('询问', '您确定要删除此记录？', function(r) {
+			if (r) {
+				$.post(myJSContext.contextPath + '/userServlet', {
+					id : id,
+					reqType :'delete'
+				}, function() {
+					grid.datagrid('reload');
+				}, 'json');
+			}
+		});
+	};
 
+	
+	
+/******************************************************************/	
 	var grid; //数据表格
 
 	//定义datagrid 数据表格
@@ -161,8 +178,7 @@
 													.formatString(
 															'<img class="iconImg ext-icon-group" title="用户机构" onclick="grantOrganizationFun(\'{0}\');"/>',
 															row.id);
-											str += sy
-													.formatString(
+											str += sy.formatString(
 															'<img class="iconImg ext-icon-note_delete" title="删除" onclick="removeFun(\'{0}\');"/>',
 															row.id);
 											return str;
@@ -177,6 +193,9 @@
 							onLoadSuccess : function(data) {
 								$('.iconImg').attr('src', myJSContext.pixel_0);//解决img src为空 出现空白图标的问题.
 								//parent.$.messager.progress('close');
+							},
+							onDblClickRow: function(rowIndex, rowData){
+								showFun(rowData.id);
 							}
 						});
 		$("#d12").css({
@@ -210,7 +229,7 @@
 										<option value="1">男</option>
 										<option value="0">女</option></td>
 								<td>创建时间</td>
-								<input name="reqType" value="select" id="reqType" type="hidden" />
+								<input name="reqType" value="selectAll" id="reqType" type="hidden" />
 								<td><input name="updateDate_Begin" class="Wdate"
 									onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"
 									readonly="readonly" style="width: 110px;" />-<input
@@ -238,9 +257,9 @@
 							<td><div class="datagrid-btn-separator"></div></td>
 							<td><a href="javascript:void(0);" class="easyui-linkbutton"
 								data-options="iconCls:'ext-icon-table_add',plain:true"
-								onclick="">导入</a></td>
+								onclick="">导入没做</a></td>
 							<td><a href="javascript:void(0);" class="easyui-linkbutton"
-								data-options="iconCls:'ext-icon-table_go',plain:true" onclick="">导出</a></td>
+								data-options="iconCls:'ext-icon-table_go',plain:true" onclick="">导出没做</a></td>
 						</tr>
 					</table>
 				</td>
