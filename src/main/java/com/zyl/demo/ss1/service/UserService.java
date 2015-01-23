@@ -29,6 +29,6 @@ public interface UserService {
 	 */
 	public Long count(Map<String,String> m) throws Exception;
 	public Long count(String loginName, String userName,String cellNO) throws Exception;
-	public User getUser(Long id);
+	public User getUser(String id);
 
 }

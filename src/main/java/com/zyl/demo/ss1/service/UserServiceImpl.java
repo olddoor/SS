@@ -10,7 +10,7 @@ import com.zyl.demo.ss1.persistence.UserDao;
 import com.zyl.demo.ss1.persistence.UserDaoImpl;
 
 public class UserServiceImpl implements UserService {
-	private UserDao userDao = new UserDaoImpl();
+	private UserDao userDao = new UserDaoImpl();//后续用spring替代
 
 	public void save(User u)throws Exception {
 		userDao.save(u);
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 		return userDao.count(m);
 	}
 	
-	public User getUser(Long id){
+	public User getUser(String id){
 		return userDao.getUser(id)!=null ?userDao.getUser(id):null ;
 	}
 

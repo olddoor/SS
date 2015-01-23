@@ -6,17 +6,25 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
 
 
 @Entity //声明为实体
 @Table(name="T_User")  //修改表名
 public class User {
-	@Id  //设置为主键
-	@GeneratedValue  //设置主键增长方式默认为native
-	private Long id;
+	/**
+	 * //在JPA中指定使用Hibernate的主键实现策略:uuid
+	 */
+	@Id  //标记为主键
+	@GeneratedValue(generator="paymentableGenerator") 
+	@GenericGenerator(name = "paymentableGenerator",strategy="uuid")
+	private String id;
 	/**
 	 * 登录名
 	 */
@@ -51,6 +59,10 @@ public class User {
 	 */
 	private Character enabled;
 	
+	@ManyToOne
+	@JoinColumn(name="group_id")
+	private Group group;
+	
 	// setter/getter
 	
 	public Boolean getEnabled() {
@@ -67,6 +79,14 @@ public class User {
 		}
 	}
 	
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
+	}
+
 	public String getLoginName() {
 		return loginName;
 	}
@@ -99,11 +119,11 @@ public class User {
 		this.cellNO = cellNO;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

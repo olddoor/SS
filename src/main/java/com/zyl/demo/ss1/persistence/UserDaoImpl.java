@@ -248,7 +248,7 @@ public class UserDaoImpl implements UserDao {
 		return query.list();
 	}
 	
-	public User getUser(Long id){
+	public User getUser(String id){
 		Session session = HibernateUtil.currentSession(); 
 		User u= (User) session.get(User.class, id);
 		return u;

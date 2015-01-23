@@ -20,6 +20,9 @@
         <property name="format_sql">true</property>
         <!-- Drop and re-create the database schema on startup-->
         <property name="hbm2ddl.auto">update</property>
+        
+        <!-- entity mapping -->
 		<mapping class="com.zyl.demo.ss1.entity.User"/>
+		<mapping class="com.zyl.demo.ss1.entity.Group"/>
     </session-factory>
 </hibernate-configuration>

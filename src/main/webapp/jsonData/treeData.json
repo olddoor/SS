@@ -11,7 +11,10 @@
     	}
     },{
     	"text":"组织管理",
-    	"checked":true
+    	"checked":true,
+    	"attributes":{
+    	"url":"/jqueryJsp/groupList.jsp"
+    	}
     },{
     "text":"其他待定",
     "state":"open",

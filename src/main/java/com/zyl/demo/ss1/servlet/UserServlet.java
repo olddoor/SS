@@ -108,11 +108,7 @@ public class UserServlet extends HttpServlet {
 		if(password==null||password.equals("")){
 			throw new login_Exception("password can not be null! ");
 		}
-		User u=userService.exitsUser(loginName);
-		if(u==null){
-			throw new login_Exception("loginName dose'nt exits ");
-		}
-		u=userService.login(loginName, password);
+		User u=userService.login(loginName, password);
 		if(u==null){
 			throw new login_Exception("loginName or password may not be right ");
 		}
@@ -122,7 +118,12 @@ public class UserServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		try {
 			User u = new User();
-			u.setLoginName(request.getParameter("loginName"));
+			String loginName=request.getParameter("loginName");
+			User u1=userService.exitsUser(loginName);
+			if(u1==null){
+				throw new login_Exception("loginName dose'nt exits ");
+			}
+			u.setLoginName(loginName);
 			u.setPassword(request.getParameter("password"));
 			u.setUpdateDate(new Date());
 			u.setUserName(request.getParameter("userName"));
@@ -137,9 +138,9 @@ public class UserServlet extends HttpServlet {
 	private void updateUser(HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
-			String idstr=request.getParameter("id");
-			if(idstr!=null&&!idstr.equals("")){
-				User u = userService.getUser(Long.parseLong(idstr));
+			String id=request.getParameter("id");
+			if(id!=null&&!id.equals("")){
+				User u = userService.getUser(id);
 				u.setLoginName(request.getParameter("loginName"));
 				u.setPassword(request.getParameter("password"));
 				u.setUserName(request.getParameter("userName"));
@@ -154,8 +155,7 @@ public class UserServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String id = request.getParameter("id");
-			Long id1 = Long.valueOf(id);
-			User u = userService.getUser(id1);
+			User u = userService.getUser(id);
 			if (u != null && !u.equals("")) {
 				userService.delete(u);
 			}
@@ -194,7 +194,7 @@ public class UserServlet extends HttpServlet {
 		String id=request.getParameter("id");
 		User u=null;
 		if(id!=null&&!id.equals("")){
-			u=userService.getUser(Long.valueOf(id));
+			u=userService.getUser(id);
 		}
 		String str=JsonUtils.toJSONString(u);
 		JsonUtils.write(response, str);
