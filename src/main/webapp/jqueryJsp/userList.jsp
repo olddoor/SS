@@ -16,7 +16,7 @@
 		//在当前窗口的父窗口打开一个窗口
 		var dialog = parent.sy.modalDialog({
 			title : '添加用户信息',
-			url : myJSContext.contextPath + '/jqueryJsp/addUser.jsp',
+			url : myJSContext.contextPath + '/jqueryJsp/addUser.jsp',//addUser.jsp /jqueryJsp/SyuserForm.jsp
 			buttons : [
 					{
 						text : '添加',
@@ -31,7 +31,7 @@
 							dialog.find('iframe').get(0).contentWindow.reset();
 						}
 					} ]
-		}, '400', '450');
+		}, '400', '450');//,
 	};
 	//查看
 	var showFun = function(id) {

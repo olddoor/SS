@@ -13,7 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -23,6 +25,10 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity //声明为实体
 @Table(name="T_Group")  //修改表名
 public class Group {
+	
+	//配合前台对datatree的修改.支持平滑数据
+	@Transient
+	private String pid;// 虚拟属性，用于获得当前机构的父机构ID
 	
 	@Id  //标记为主键
 	@GeneratedValue(generator="GroupGenerator") 
@@ -53,6 +59,27 @@ public class Group {
 	@OneToMany(mappedBy="group") //维护关系交给User
 	private Set<User> users;
 
+	
+	
+	
+	//getter&&setter
+	
+	
+	/**
+	 * 用于业务逻辑的字段，注解@Transient代表不需要持久化到数据库中
+	 * 获取父节点的id
+	 * @return
+	 */
+	public String getPid() {
+		if (fatherGroup != null && !StringUtils.isBlank(fatherGroup.getId())) {
+			return fatherGroup.getId();
+		}
+		return pid;
+	}
+
+	public void setPid(String pid) {
+		this.pid = pid;
+	}
 	
 	public String getId() {
 		return id;

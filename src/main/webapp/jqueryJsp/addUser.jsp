@@ -14,21 +14,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>新增用户</title>
 </head>
-<style>
-* {
-  margin:1;
-  padding:1;
- }
- table {
-  font-family:Verdana, Arial, Helvetica, sans-serif;
-  font-size:14px;
-  border-collapse:collapse;
- }
- th,td {
-  border:2px solid #ccc;
-  padding:5px 20px;
- }
-</style>
+
 <body>
 <script type="text/javascript">
 	//重置
@@ -85,7 +71,7 @@ $(function() {
 	<input name="id" value="<%=uid%>" readonly="readonly" type="hidden"/>
 	<fieldset>
 		<legend>用户信息</legend>
-		<table>
+		<table class="table" style="width: 100%;">
 			<tr>
 				<td>登录名</td>
 				<td><input class="easyui-textbox"  name="loginName" data-options="required:true"/></td>

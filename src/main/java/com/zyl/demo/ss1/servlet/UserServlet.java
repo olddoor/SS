@@ -120,7 +120,7 @@ public class UserServlet extends HttpServlet {
 			User u = new User();
 			String loginName=request.getParameter("loginName");
 			User u1=userService.exitsUser(loginName);
-			if(u1==null){
+			if(u1!=null){
 				throw new login_Exception("loginName dose'nt exits ");
 			}
 			u.setLoginName(loginName);

@@ -260,7 +260,10 @@ $.extend($.fn.tree.defaults, sy.loadFilter);
  * @author 孙宇
  * 
  * @requires jQuery,EasyUI
- * 
+ * 使用方法，放到公共的JS文件里面。在配置TREE或者TREEGRID的时候，如下三个属性必备：
+            idField: ''子菜单字段名'',//子菜单字段名
+            treeField: ''显示的字段名'',//显示的字段名
+            parentField: ''父菜单字段名'',//父菜单字段名
  */
 $.extend($.fn.treegrid.defaults, {
 	loadFilter : function(data, parentId) {
