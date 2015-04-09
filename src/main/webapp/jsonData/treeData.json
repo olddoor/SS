@@ -16,6 +16,12 @@
     	"url":"/jqueryJsp/groupList.jsp"
     	}
     },{
+    	"text":"资源管理",
+    	"checked":true,
+    	"attributes":{
+    	"url":"/jqueryJsp/resourceList.jsp"
+    	}
+    },{
     "text":"其他待定",
     "state":"open",
     "attributes":{
