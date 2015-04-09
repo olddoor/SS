@@ -1,0 +1,26 @@
+[
+  {
+    "address": "333333",
+    "code": "0591",
+    "iconCls": "ext-icon-brick_link",
+    "id": "402881e64b15f12e014b15f251280000",
+    "name": "福州",
+    "updateDate": "2015-01-23 16:39:36"
+  },
+  {
+    "address": "3333",
+    "code": "059101",
+    "fatherGroup": {
+      "address": "333333",
+      "code": "0591",
+      "iconCls": "ext-icon-brick_link",
+      "id": "402881e64b15f12e014b15f251280000",
+      "name": "福州",
+      "updateDate": "2015-01-23 16:39:36"
+    },
+    "iconCls": "ext-icon-clock_go",
+    "id": "402881e64b15f12e014b15f29ce30001",
+    "name": "鼓楼",
+    "updateDate": "2015-01-23 16:39:56"
+  }
+]
