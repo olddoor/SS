@@ -4,7 +4,7 @@
 
 <%
 String basePath=request.getContextPath(); 
-Long id = Long.parseLong((request.getParameter("id")));
+String id =(request.getParameter("id"));
 UserService userService=new UserServiceImpl();
 User u=userService.getUser(id);
 userService.delete(u);

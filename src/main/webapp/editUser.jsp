@@ -21,9 +21,8 @@ body{font-family:tahoma;font-size:18px;}
 	User u=new User();
 	String reqType="update";
 	if(userId!=null&&!userId.equals("")){
-		Long id=Long.parseLong(userId);
 		UserService service= new UserServiceImpl();
-		u=service.getUser(id);
+		u=service.getUser(userId);
 	}
 	
 %>

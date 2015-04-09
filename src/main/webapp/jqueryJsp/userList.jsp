@@ -69,8 +69,19 @@
 			}
 		});
 	};
-
-	
+//用户组织绑定
+	var grantOrganizationFun = function(id) {
+		var dialog = parent.sy.modalDialog({
+			title : '修改机构',
+			url : sy.contextPath + '/securityJsp/base/SyuserOrganizationGrant.jsp?id=' + id,
+			buttons : [ {
+				text : '修改',
+				handler : function() {
+					dialog.find('iframe').get(0).contentWindow.submitForm(dialog, grid, parent.$);
+				}
+			} ]
+		});
+	};
 	
 /******************************************************************/	
 	var grid; //数据表格
@@ -86,10 +97,11 @@
 								reqType : 'selectAll'
 							},
 							rownumbers : true,//显示行数
+							pagePosition: 'bottom',
 							singleSelect : true,//单选
 							pagination : true,//设置true将在数据表格底部显示分页工具栏。
-							pageSize : 3,
-							pageList : [ 10, 20, 50 ],
+							pageSize : 5,
+							pageList : [5, 10, 15],
 							columns : [ [
 									{
 										field : 'id',
@@ -174,8 +186,7 @@
 													.formatString(
 															'<img class="iconImg ext-icon-user" title="用户角色" onclick="grantRoleFun(\'{0}\');"/>',
 															row.id);
-											str += sy
-													.formatString(
+											str += sy.formatString(
 															'<img class="iconImg ext-icon-group" title="用户机构" onclick="grantOrganizationFun(\'{0}\');"/>',
 															row.id);
 											str += sy.formatString(
