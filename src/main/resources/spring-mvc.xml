@@ -6,8 +6,8 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
     
     <description>Spring MVC Configuration</description>
-	<!-- 默认的注解映射的支持 -->  
-    <mvc:annotation-driven conversion-service="conversion-service" />
+	<!-- 默认的注解映射的支持 .其中属性如下conversion-service 数据绑定时类型转换，如果不设置则默认注册FormattingConversionService-->  
+    <mvc:annotation-driven/>
     
 	<!-- 使用Annotation自动注册Bean,只扫描@Controller -->
 	<context:component-scan base-package="com.zyl.web.controller" use-default-filters="false"><!-- base-package 如果多个，用“,”分隔 -->

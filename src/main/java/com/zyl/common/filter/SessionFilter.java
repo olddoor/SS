@@ -27,9 +27,11 @@ public class SessionFilter implements Filter{
 			FilterChain chain) throws IOException, ServletException {
 		 HttpServletRequest hrequest = (HttpServletRequest)request;
 		 HttpServletResponseWrapper wrapper = new HttpServletResponseWrapper((HttpServletResponse) response);
+		  //判断是否是登陆页面  
+         String servletPath = hrequest.getServletPath();  
 		 //用户未登录则跳转到登陆
-		 if(hrequest.getAttribute("user")==null){
-			 wrapper.sendRedirect("");
+		 if(hrequest.getAttribute("user")==null&&!servletPath.contains("index.jsp")&&!servletPath.contains("login")){
+			 hrequest.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(request,response);
 			 return;
 		 }
 		 chain.doFilter(request, response);

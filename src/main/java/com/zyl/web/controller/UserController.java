@@ -82,8 +82,7 @@ public class UserController extends BaseController {
 		grid.setTotal(Long.valueOf(total));
 		grid.setRows(us);
 		//使用封装好的json工具(fastjson)输出
-		String str=JsonUtils.obj2Str_ByFilter(grid, null, null, null, null);//含时间格式化
-		JsonUtils.write(response, str);
+		this.writeJson(grid, response);
 	}
 	
 	/**
