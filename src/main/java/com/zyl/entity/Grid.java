@@ -13,7 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 public class Grid {
 	private Long total = 0L; // 总记录数
 	private List rows = new ArrayList(); // 数据
+	
+	//构造函数
+	public Grid(){
+		
+	}
+	public  Grid(Long total,List rows){
+		this.total=total;
+		this.rows=rows;
+	}
 
+	
+	//getter/setter
 	public Long getTotal() {
 		return total;
 	}

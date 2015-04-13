@@ -178,7 +178,8 @@ public class UserServlet extends HttpServlet {
 			us = userService.getUsers(m);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} //获取记录
+		} 
+		//获取记录
 		Grid grid = new Grid();
 		grid.setTotal(Long.valueOf(total));
 		grid.setRows(us);

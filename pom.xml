@@ -416,6 +416,8 @@
 		<artifactId>commons-fileupload</artifactId>
 		<version>${commons-fileupload.version}</version>
 	</dependency>
+	-->
+	
 	<dependency>
 		<groupId>commons-beanutils</groupId>
 		<artifactId>commons-beanutils</artifactId>
@@ -427,7 +429,6 @@
 			</exclusion>
 		</exclusions>
 	</dependency>
-	-->
 		<!-- google java library -->
 		<!-- <dependency> <groupId>com.google.guava</groupId> <artifactId>guava</artifactId> 
 			<version>${guava.version}</version> </dependency> -->

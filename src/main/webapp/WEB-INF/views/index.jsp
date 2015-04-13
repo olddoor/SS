@@ -34,7 +34,7 @@
 <body>
 <%
 //若已登录,则进入管理页面 main.jsp. 否则提示
-	SessionInfo sessionInfo = (SessionInfo) session.getAttribute("sessionInfo");
+	SessionInfo sessionInfo = (SessionInfo) session.getAttribute("user");
 	if (sessionInfo != null) {
 		request.getRequestDispatcher("/main.jsp").forward(request, response);
 	}

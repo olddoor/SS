@@ -11,19 +11,24 @@ package com.zyl.entity;
  */
 public class msgStr implements java.io.Serializable {
 
-	private boolean success = false;//状态
+	private boolean success = true;//状态
 
-	private String msg = ""; //提示信息
+	private String msg = "操作成功"; //提示信息
 
 	private Object obj = null;
 	
-	private String msgDetail;
+	private String msgDetail;//error info
 
 	public boolean isSuccess() {
 		return success;
 	}
 
 	public void setSuccess(boolean success) {
+		if(success){
+			this.msg="操作成功";
+		}else{
+			this.msg="操作失败";
+		}
 		this.success = success;
 	}
 

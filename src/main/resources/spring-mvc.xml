@@ -27,7 +27,7 @@
 	
 	<!-- 定义无Controller的path<->view直接映射
 	<mvc:view-controller path="/" view-name="redirect:/a"/>
- -->
+    -->
 	<!-- 拦截器配置
 	<mvc:interceptors>
 		<bean class="com.thinkgem.jeesite.modules.sys.interceptor.LogInterceptor" />
