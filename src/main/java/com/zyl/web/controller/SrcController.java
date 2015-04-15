@@ -1,0 +1,34 @@
+package com.zyl.web.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+//@RequestMapping("src/*")
+public class SrcController extends BaseController {
+	@RequestMapping(value="/src/{url}") 
+	public String src(@PathVariable(value="url") String url){
+		if(url!=null&&!url.equals("")){
+			return url;
+		}else{
+			return "jqueryJsp/404";
+		}
+	}
+	
+	@RequestMapping(value="/src/{module}/{url}") 
+	public String srcJquery(@PathVariable(value="module") String module,@PathVariable(value="url") String url){
+		StringBuffer jump=new StringBuffer();
+		if(module!=null&&!module.equals("")){
+			jump.append(module);
+		}
+		if(url!=null&&!url.equals("")){
+			jump.append("/");
+			jump.append(url);
+		}else{
+			return "jqueryJsp/404";
+		}
+		return jump.toString();
+	}
+	
+}
