@@ -35,9 +35,17 @@
 <%
 //若已登录,则进入管理页面 main.jsp. 否则提示
 	SessionInfo sessionInfo = (SessionInfo) session.getAttribute("user");
-	if (sessionInfo != null) {
-		request.getRequestDispatcher("/main.jsp").forward(request, response);
+	User u1 = (User) session.getAttribute("userSession1");
+	User u = (User) session.getAttribute("userSession");
+	if(u!=null){
+		out.println("u"+u.getLoginName());
 	}
+	if(u1!=null){
+		out.println("u1"+u1.getLoginName());
+	}
+	//if (sessionInfo != null) {
+	//	request.getRequestDispatcher("/main.jsp").forward(request, response);
+	//}
 %>
 <%		String basePath=request.getContextPath();  
 		String msg=(String)request.getAttribute("msg");
@@ -47,7 +55,7 @@
 %>
 		<div id="all">
 		<a  style=" font-size:25px;color:blue">欢迎使用XX系统</a><br/><br/>
-		<form action="<%=basePath%>/userServlet" method="post">
+		<form action="<%=basePath%>/user/login" method="post">
 		<input type="hidden" name="reqType" value="login">
 		<fieldset style="width:300px">
 		<legend>登录</legend>

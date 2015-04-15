@@ -5,26 +5,6 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   </head>
-<!--   <body leftMargin=0 rightMargin=0 topMargin=0 >
-    <div id="outer1">
-      <div id="inner0" class="div-inline">
-        <div id="inner1" class="div-inline">
-          <a>
-            XX系统欢迎您:
-          </a>
-          <a>
-            ${sessionScope.user.getUserName()}
-          </a>
-        </div>
-        <div id="inner4"class="div-inline">
-          <a href="mailto:test@139.com">
-            <img src="images/c3.gif"  border=0  alt="求助中心">
-          </a>
-          <img src="images/c2.gif"  alt="系统简介">
-          <img src="images/c1.gif"  alt="操作手册">
-        </div>
-      </div>
-    </body> -->
     <div id="sessionInfoDiv" style="position: absolute; right: 10px; top: 5px;">
 	<%
 		/*if (sessionInfo != null) {

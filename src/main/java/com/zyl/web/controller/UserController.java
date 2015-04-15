@@ -9,8 +9,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -38,7 +40,7 @@ public class UserController extends BaseController {
 	}
 	
 	@RequestMapping(value="login",method=RequestMethod.POST)
-	public ModelAndView login(User u,HttpServletRequest request, HttpServletResponse response ){
+	public ModelAndView login(User u,HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mav = new ModelAndView();  
 		String loginName=u.getLoginName();
 		String password=u.getPassword();
@@ -48,14 +50,15 @@ public class UserController extends BaseController {
 		}
 		/*以下定义的变量,跟类上的@SessionAttributes 定义的需要存到session 中的属性名称相同或类型相同,
 		所以在请求完成后这个属性将添加到session 属性中。*/
-		User userSession=userService.login(loginName, password);
-		if(userSession==null){
+		User user=userService.login(loginName, password);
+		if(user==null){
 			msg.setMsg("用户名或者密码有误");
 			//跳转回登录页面
 			mav.addObject("msg", msg);
 		}else{
 			//跳转成功页面
-			mav.setViewName("index");
+			mav.setViewName("main");
+			mav.addObject("userSession", user);
 			msg.setSuccess(true);
 		}
 		return mav;

@@ -1,14 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.zyl.entity.*"%>
-<%
-	String contextPath = request.getContextPath();
-%>
+<jsp:include page="../../static/import.jsp"></jsp:include>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<jsp:include page="<%=contextPath%>/static/import.jsp"></jsp:include>
-<% String basePath=request.getContextPath(); %>
-<%
+<% 
+	String basePath=request.getContextPath(); 
 	SessionInfo sessionInfo = (SessionInfo) session.getAttribute("sessionInfo");
 %>
 <head>
@@ -19,7 +15,7 @@
 		$(function() { //// 相当于$(document).ready(function(){ } )  dom加载完毕后开始执行
 			//添加菜单树
 			mainMenu = $('#mainMenu').tree({
-				url : myJSContext.contextPath + '/jsonData/treeData.json',
+				url : myJSContext.contextPath + '/treeData.json',
 				onClick: function(node){
 					if (node.attributes.url){ //如果节点url不为空
 						var src = myJSContext.contextPath + node.attributes.url;
@@ -61,7 +57,7 @@
 </script>	
 </head>
 <body id="mainLayout" class="easyui-layout">
-    <div data-options="region:'north',href:'top.jsp'" style="height:100px; overflow: hidden;" ></div>
+    <div data-options="region:'north',href:'<%=basePath%>/src/top'" style="height:100px; overflow: hidden;" ></div>
     <div data-options="region:'south' , title:'South Title',split:true">
     </div>
     <div data-options="region:'east',title:'East',split:true" style="width:100px;"></div>
@@ -71,7 +67,7 @@
     <div data-options="region:'center'" style="overflow: hidden;">
       <div id="mainTabs">
         <div title="欢迎" data-options="iconCls:'ext-icon-heart'" id="data_Div">
-          <iframe src="<%=contextPath%>/welcome.jsp"
+          <iframe src="<%=basePath%>/src/welcome"
              allowTransparency="true" style="border: 0; width: 100%; height: 99%;" frameBorder="0">
           </iframe>
         </div>
