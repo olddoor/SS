@@ -7,7 +7,7 @@
     	"text":"人员管理",
     	"checked":true,
     	"attributes":{
-    	"url":"/src/userList"
+    	"url":"/src/jqueryJsp/userList"
     	}
     },{
     	"text":"组织管理",

@@ -161,8 +161,8 @@ public class UserDaoImpl implements UserDao {
 		String order="desc";
 		String sort="id";
 		if(m!=null&&!m.isEmpty()){
-			if(m.get("row")!=null){ //每页数量
-				String maxResults_Str = m.get("row");
+			if(m.get("rows")!=null){ //每页数量
+				String maxResults_Str = m.get("rows");
 				if (maxResults_Str != null && !maxResults_Str.equals("")) {
 					maxResults=(Integer.valueOf(maxResults_Str)).intValue();
 				}

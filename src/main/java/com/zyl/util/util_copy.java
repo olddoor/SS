@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
 import org.apache.commons.beanutils.converters.SqlDateConverter;
@@ -21,34 +22,21 @@ import org.apache.commons.logging.LogFactory;
  * @author Z10
  *
  */
-public class util_copy extends BeanUtils {
+public class util_copy extends BeanUtilsBean {
 
-	private static Map cache = new HashMap();
-	private static Log logger = LogFactory.getFactory().getInstance(
-			util_copy.class);
-
-	private util_copy() {
-
-	}
-
-	static {
-		// 注册sql.date的转换器，即允许BeanUtils.copyProperties时的源目标的sql类型的值允许为空
-		ConvertUtils.register(new SqlDateConverter(null), java.sql.Date.class);
-		// ConvertUtils.register(new SqlTimestampConverter(),
-		// java.sql.Timestamp.class);
-		// 注册util.date的转换器，即允许BeanUtils.copyProperties时的源目标的util类型的值允许为空
-		ConvertUtils.register(new DateConverter(null), java.util.Date.class);
-	}
-	
 	/**
-	 * 用于对象属性值copy
-	 * 继承apache的BeanUtils,避免调用copyProperties时因date为空而报错的情况
+	 * bean之间属性复制,null不复制.
+	 * 用法: 父类指向子类:
+	 * BeanUtilsBean copy= new util_copy();
+	   copy.copyProperties(oldUser, u);//copyProperties(,)里面会调用被覆盖的copyProperties(, ,)
 	 */
-	public static void copyProperties(Object target, Object source)
-			throws InvocationTargetException, IllegalAccessException {
-		// 支持对日期copy
-		org.apache.commons.beanutils.BeanUtils.copyProperties(target, source);
-	}
+	 @Override
+	 public void copyProperty(Object dest, String name, Object value)
+	            throws IllegalAccessException, InvocationTargetException {
+	        if(value==null)return;
+	        super.copyProperty(dest, name, value);
+	    }
+	
 
 	/**
 	 * 用于将httpRequest请求参数封装为map<name,value>的集合

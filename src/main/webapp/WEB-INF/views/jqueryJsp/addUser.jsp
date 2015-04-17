@@ -2,14 +2,13 @@
     pageEncoding="UTF-8"%>
 <%
 	String contextPath = request.getContextPath();
-	out.println(contextPath);
-	String uid = request.getParameter("uid");
+	String uid = request.getParameter("id");
 	if (uid == null) {
 		uid = "";
 	}
 %>
 <html>
-<jsp:include page="<%=contextPath%>/static/import.jsp"></jsp:include>
+<jsp:include page="../../../static/import.jsp"></jsp:include>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>新增用户</title>
@@ -23,12 +22,13 @@
 	}
 	//提交
 	var submitNow = function($dialog, $grid, $pjq) {
-		var url = '<%=contextPath%>'+'/userServlet';
-		if ($(':input[name="id"]').val().length > 0) {
+		var url = '<%=contextPath%>'+'/user/saveORupdate';
+		/*if ($(':input[name="id"]').val().length > 0) {
 			url = url+"?reqType=update"; //更新
 		} else {
 			url = url+"?reqType=reg";//新增
 		}
+		*/
 		$.post(url,sy.serializeObject($('form')),function(result){
 			if (result.success) {
 				$pjq.messager.alert('提示', result.msg, 'info');
@@ -46,9 +46,11 @@ $(function() {
 		parent.$.messager.progress({
 			text : '数据加载中....'
 		});
-		$.post('<%=contextPath%>' + '/userServlet', {
-			id : $(':input[name="id"]').val(),
-			reqType:"selectUser"
+		$.post('<%=contextPath%>' + '/user/getUser', {
+			id : $(':input[name="id"]').val()
+			/*
+				reqType:"selectUser"
+			*/
 		}, function(result) {
 			if (result.id != undefined) {
 				$('form').form('load', {

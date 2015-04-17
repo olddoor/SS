@@ -3,6 +3,7 @@ package com.zyl.web.controller;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.beanutils.BeanUtilsBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -103,28 +105,42 @@ public class UserController extends BaseController {
 	}
 	
 	/**
-	 * 增加
+	 * 新增/修改
+	 * @param request
+	 * @param response
+	 * @param u
+	 * @throws IOException 
 	 */
-	@RequestMapping(value="add",method=RequestMethod.POST)
-	public void add(HttpServletRequest request,HttpServletResponse response,User u) throws IOException{
-			msgStr msg=new msgStr();
+	@RequestMapping(value="saveORupdate",method=RequestMethod.POST)
+	public void saveORupdate(HttpServletRequest request,HttpServletResponse response,User u) throws IOException{
+		msgStr msg=new msgStr();
+		String id=u.getId();
 		try {
-			User user=userService.exitsUser(u.getLoginName());
-			if(user==null){
-				userService.save(u);
-				msg.setSuccess(true);
-			}else{
-				//用户已存在
-				msg.setMsg("loginname已存在");
-				throw new commonException();
+			if (id!=null) {//update
+				User oldUser = userService.getUser(id);
+				//bean copy :if not null then copy 
+				BeanUtilsBean copy= new util_copy();
+				copy.copyProperties(oldUser, u);
+				oldUser.setUpdateDate(new Date());
+				userService.save(oldUser);
+			} else {//save
+				User user = userService.exitsUser(u.getLoginName());
+				if (user!=null) {
+					//用户已存在
+					msg.setMsg("loginname已存在");
+					throw new commonException();
+				} else {
+					u.setUpdateDate(new Date());
+					userService.save(u);
+				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			msg.setSuccess(false);
 			msg.setMsgDetail(e.getMessage());
 		}
-			this.writeJson(msg, response);
+		this.writeJson(msg, response);
 	}
+	
 	/**
 	 * 删除
 	 */
@@ -137,7 +153,6 @@ public class UserController extends BaseController {
 			if (u != null && !u.equals("")) {
 				userService.delete(u);
 			}
-			msg.setSuccess(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			msg.setMsgDetail(e.getMessage());
@@ -146,29 +161,4 @@ public class UserController extends BaseController {
 		this.writeJson(msg, response);
 	}
 	
-	/**
-	 * 修改
-	 */
-	@RequestMapping(value="update",method=RequestMethod.POST)
-	public void update(HttpServletRequest request,HttpServletResponse response,User u) throws IOException{
-		msgStr msg=new msgStr();
-		try {
-			try {
-				User oldUser = userService.getUser(u.getId());
-				//bean copy :if not null then copy 
-				util_copy.copyProperties(oldUser, u);
-				userService.save(oldUser);
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} catch (Exception e) {
-			msg.setSuccess(false);
-			msg.setMsgDetail(e.getMessage());
-		}
-		this.writeJson(msg, response);
-	}
 }

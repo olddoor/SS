@@ -3,20 +3,19 @@
 	String contextPath = request.getContextPath();
 %>
 <html>
-<jsp:include page="<%=contextPath %>/static/import.jsp"></jsp:include>
+<jsp:include page="../../../static/import.jsp"></jsp:include>
 <head>
 <title>用户管理</title>
 <script type="text/javascript">
-
-
 	/**
 	相关操作按钮
 	 **/
+	//新建
 	var addFun = function() {
 		//在当前窗口的父窗口打开一个窗口
 		var dialog = parent.sy.modalDialog({
 			title : '添加用户信息',
-			url : myJSContext.contextPath + '/jqueryJsp/addUser.jsp',//addUser.jsp /jqueryJsp/SyuserForm.jsp
+			url : myJSContext.contextPath + '/src/jqueryJsp/addUser',//addUser.jsp /jqueryJsp/SyuserForm.jsp
 			buttons : [
 					{
 						text : '添加',
@@ -37,14 +36,14 @@
 	var showFun = function(id) {
 		var dialog = parent.sy.modalDialog({
 			title : '查看用户信息',
-			url : myJSContext.contextPath + '/jqueryJsp/addUser.jsp?uid=' + id
+			url : myJSContext.contextPath + '/src/jqueryJsp/addUser?id=' + id
 		}, '400', '300');
 	};
 	//修改
 	var editFun = function(id) {
 		var dialog = parent.sy.modalDialog({
 			title : '修改用户信息',
-			url : myJSContext.contextPath + '/jqueryJsp/addUser.jsp?uid=' + id,
+			url : myJSContext.contextPath + '/src/jqueryJsp/addUser?id=' + id,
 			buttons : [ {
 				text : '保存',
 				handler : function() {
@@ -60,9 +59,9 @@
 		//窗口的父对象调用$.messager.confirm打开提示窗口
 		parent.$.messager.confirm('询问', '您确定要删除此记录？', function(r) {
 			if (r) {
-				$.post(myJSContext.contextPath + '/userServlet', {
-					id : id,
-					reqType :'delete'
+				$.post(myJSContext.contextPath + '/user/delete', {
+					id : id
+					//reqType :'delete'
 				}, function() {
 					grid.datagrid('reload');
 				}, 'json');
@@ -92,10 +91,7 @@
 		grid = $('#grid')
 				.datagrid(
 						{
-							url : myJSContext.contextPath + '/userServlet',
-							queryParams : {
-								reqType : 'selectAll'
-							},
+							url : myJSContext.contextPath + '/user/getUserList',
 							rownumbers : true,//显示行数
 							pagePosition: 'bottom',
 							singleSelect : true,//单选
