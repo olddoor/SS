@@ -5,19 +5,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Component;
+
 import com.zyl.dao.UserDao;
 import com.zyl.dao.UserDaoImpl;
 import com.zyl.entity.User;
-
+@Component(value="userService")
 public class UserServiceImpl implements UserService {
-	private UserDao userDao = new UserDaoImpl();//后续用spring替代
+	
+//	private UserDao userDao = new UserDaoImpl();//后续用spring替代
+	private UserDao userDao;
+
+	public UserDao getUserDao() {
+		return userDao;
+	}
+	@Resource(name="userDao")
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
 
 	public void save(User u)throws Exception {
 		userDao.save(u);
 	}
 
 	public void update(User vo)throws Exception  {
-		User oldUser=userDao.getUser(vo.getId());
+		User oldUser=userDao.get(vo.getId());
 		if(vo.getLoginName()!=null&&!vo.getLoginName().equals("")){
 			oldUser.setLoginName(vo.getLoginName());
 		}
@@ -49,7 +63,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	public User getUser(String id){
-		return userDao.getUser(id)!=null ?userDao.getUser(id):null ;
+		return userDao.get(id)!=null ?userDao.get(id):null ;
 	}
 
 	@Override

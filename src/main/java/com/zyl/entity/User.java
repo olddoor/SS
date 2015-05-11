@@ -1,5 +1,6 @@
 package com.zyl.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -17,7 +18,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity //声明为实体
 @Table(name="T_User")  //修改表名
-public class  User{
+public class  User implements Serializable{
 	/**
 	 * //在JPA中指定使用Hibernate的主键实现策略:uuid
 	 */

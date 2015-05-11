@@ -19,11 +19,12 @@
 		<spring.version>3.2.5.RELEASE</spring.version>
 		<!-- <spring-data-jpa.version>1.3.0.RELEASE</spring-data-jpa.version> -->
 		<hibernate.version>3.6.10.Final</hibernate.version>
-		<!-- <hibernate.annotations.version>3.5.6-Final</hibernate.annotations.version> -->
+		<hibernate.annotations.version>3.5.6-Final</hibernate.annotations.version>
+		<druid.version>1.0.1</druid.version> 
 		<!--<hibernate-search.version>4.2.0.Final</hibernate-search.version> -->
 		<!--<hibernate-validator.version>5.0.1.Final</hibernate-validator.version> -->
 		<!--<mybatis.version>3.2.3</mybatis.version> <mybatis-spring.version>1.2.1</mybatis-spring.version> 
-			<druid.version>1.0.1</druid.version> <shiro.version>1.2.2</shiro.version> 
+			<shiro.version>1.2.2</shiro.version> 
 			<ehcache.version>2.6.6</ehcache.version> <sitemesh.version>2.4.2</sitemesh.version> 
 			<activiti.version>5.14</activiti.version> -->
 		<slf4j.version>1.7.5</slf4j.version>
@@ -35,9 +36,11 @@
 		<commons-beanutils.version>1.8.3</commons-beanutils.version>
 		<jackson.version>2.4.0</jackson.version>
 		<fastjson.version>1.1.37</fastjson.version>
-		<!--  <xstream.version>1.4.3</xstream.version> 
-			<guava.version>14.0.1</guava.version> <dozer.version>5.4.0</dozer.version> 
-			<poi.version>3.9</poi.version> <freemarker.version>2.3.19</freemarker.version> -->
+		<xstream.version>1.4.3</xstream.version>
+		<guava.version>14.0.1</guava.version>
+		<dozer.version>5.4.0</dozer.version>
+		<poi.version>3.9</poi.version>
+		<freemarker.version>2.3.19</freemarker.version>
 		<!-- jdbc driver setting -->
 		<mysql.driver.version>5.1.13</mysql.driver.version>
 		<oracle.driver.version>10.2.0.1.0</oracle.driver.version>
@@ -430,10 +433,13 @@
 		</exclusions>
 	</dependency>
 		<!-- google java library -->
-		<!-- <dependency> <groupId>com.google.guava</groupId> <artifactId>guava</artifactId> 
-			<version>${guava.version}</version> </dependency> -->
+	<dependency>
+		<groupId>com.google.guava</groupId>
+		<artifactId>guava</artifactId>
+		<version>${guava.version}</version>
+	</dependency>
 		<!-- json -->
-		<!-- jackson json 
+		<!-- jackson json 	-->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
@@ -454,7 +460,7 @@
 			<artifactId>jackson-module-jaxb-annotations</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
-		-->
+	
 		<!-- 加入fastjson依赖包 -->
 		<dependency>
 			<groupId>com.alibaba</groupId>

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,6 +29,7 @@ import com.zyl.entity.User;
 import com.zyl.entity.msgStr;
 import com.zyl.service.UserService;
 import com.zyl.service.UserServiceImpl;
+import com.zyl.util.JsonMapper;
 import com.zyl.util.JsonUtils;
 import com.zyl.util.util_copy;
 
@@ -34,8 +37,18 @@ import com.zyl.util.util_copy;
 @RequestMapping("user")
 @SessionAttributes (value={"userSession"})   //名字为userSession的变量放入session
 public class UserController extends BaseController {
-	private UserService userService = new UserServiceImpl();
+//	private UserService userService = new UserServiceImpl();
 	
+	private UserService userService ;
+	
+	public UserService getUserService() {
+		return userService;
+	}
+	@Resource(name="userService")
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
 	@RequestMapping(value="login",method=RequestMethod.GET)
 	public String login(HttpServletRequest request, HttpServletResponse response){
 		return "index";//跳转到登陆页面index.jsp
@@ -71,7 +84,8 @@ public class UserController extends BaseController {
 	 * response.getWriter().write 输出json
 	 */
 	@RequestMapping(value="getUserList",method=RequestMethod.POST)
-	public void getUserList(HttpServletRequest request,HttpServletResponse response) throws IOException{
+	@ResponseBody  //处理器功能处理方法的返回值作为响应体（通过HttpMessageConverter进行类型转换）
+	public String getUserList(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		Map<String,String> m = new HashMap();
 		Long total=0L;
 		List<User> us=new ArrayList<User>();
@@ -87,9 +101,62 @@ public class UserController extends BaseController {
 		grid.setTotal(Long.valueOf(total));
 		grid.setRows(us);
 		//使用封装好的json工具(fastjson)输出
-		this.writeJson(grid, response);
+//		使用fastjson组件将obj->jsonstr
+//		String str=JsonUtils.obj2Str_ByFilter(grid, null, null, null, null);
+		//使用jackson组件将obj->jsonstr
+		return JsonMapper.nonDefaultMapper().toJson(grid);
 	}
 	
+	
+	/**
+	 * 用户列表
+	 * 使用springmvc中的配置jackson工具将内容输出到@ResponseBody
+	 */
+	@RequestMapping(value="getUserList2",method=RequestMethod.POST)
+	@ResponseBody  //处理器功能处理方法的返回值作为响应体（通过HttpMessageConverter进行类型转换）
+	public Map getUserList2(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		Map<String,String> m = new HashMap();
+		Map<String,Object> m2 = new HashMap();
+		Long total=0L;
+		List<User> us=new ArrayList<User>();
+		m=util_copy.httpReq_2_map(request);//request parameters to map
+		try {
+			total=userService.count(m);//记录数
+			us=userService.getUsers(m);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		m2.put("total", total.toString());
+		m2.put("rows", us);
+		return m2;
+	}
+	
+	/**
+	 * 用户列表
+	 * 使用默认自带的jason工具将内容输出到@ResponseBody
+	 */
+	@RequestMapping(value="getUserList3",method=RequestMethod.POST)
+	@ResponseBody  //处理器功能处理方法的返回值作为响应体（通过HttpMessageConverter进行类型转换）
+	public ModelAndView getUserList3(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		ModelAndView mav = new ModelAndView();  
+		Map<String,String> m = new HashMap();
+		Long total=0L;
+		List<User> us=new ArrayList<User>();
+		m=util_copy.httpReq_2_map(request);//request parameters to map
+		try {
+			total=userService.count(m);//记录数
+			us=userService.getUsers(m);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		//封装输出对象
+		Grid grid = new Grid();
+		grid.setTotal(Long.valueOf(total));
+		grid.setRows(us);
+		mav.addObject("data", grid);
+		
+		return mav;
+	}
 	/**
 	 * 查询单个用户信息
 	 */

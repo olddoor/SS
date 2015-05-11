@@ -3,8 +3,8 @@ package com.zyl.service;
 import java.util.List;
 import java.util.Map;
 
-import com.zyl.entity.User;
 
+import com.zyl.entity.User;
 
 public interface UserService {
 

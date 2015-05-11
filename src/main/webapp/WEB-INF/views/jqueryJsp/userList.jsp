@@ -91,7 +91,7 @@
 		grid = $('#grid')
 				.datagrid(
 						{
-							url : myJSContext.contextPath + '/user/getUserList',
+							url : myJSContext.contextPath + '/user/getUserList2',
 							rownumbers : true,//显示行数
 							pagePosition: 'bottom',
 							singleSelect : true,//单选
