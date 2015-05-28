@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-//@RequestMapping("src/*")
 public class SrcController extends BaseController {
 	@RequestMapping(value="/src/{url}")
 	public String src(@PathVariable(value="url") String url,

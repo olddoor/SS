@@ -4,13 +4,13 @@
 %>
 <html>
 <head>
-<jsp:include page="<%=contextPath%>/static/import.jsp"></jsp:include>
+<jsp:include page="/static/import.jsp"></jsp:include>
 <script type="text/javascript">
 	var grid;
 	var addFun = function() {
 		var dialog = parent.sy.modalDialog({
 			title : '添加组织信息',
-			url : myJSContext.contextPath + '/jqueryJsp/addGroup.jsp',
+			url : myJSContext.contextPath + '/src/jqueryJsp/addGroup',
 			buttons : [ {
 				text : '添加',
 				handler : function() {
@@ -82,7 +82,7 @@
 	$(function() {
 		grid = $('#grid').treegrid({ //treegrid作者修改过的方法.支持平滑取数
 			title : '',
-			url : myJSContext.contextPath + '/groupServlet?reqType=selectAll',//'/jqueryJsp/t.json',
+			url : myJSContext.contextPath + '/group/selectAll',//'/jqueryJsp/t.json',
 			idField : 'id',
 			treeField : 'name',
 			parentField : 'pid',

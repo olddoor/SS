@@ -5,21 +5,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.type.StandardBasicTypes;
 import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Component;
 
+import com.zyl.common.dao.BaseDao;
 import com.zyl.common.dao.GenericHibernateDao;
 import com.zyl.entity.User;
 import com.zyl.util.util_Date;
 
 @Component(value="userDao")
-public class UserDaoImpl  implements UserDao {
+public class UserDaoImpl extends BaseDao {
 
-	
 	public Long count(String loginName, String userName,String cellNO) throws Exception{
 		Map<String, String> m=new HashMap<String ,String>();
 		m.put("loginName", loginName);
@@ -119,7 +122,6 @@ public class UserDaoImpl  implements UserDao {
 	
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<User> getUsers(Map<String, String> m) throws Exception {
 		int maxResults=10;
 		int firstResult=0;
@@ -228,17 +230,16 @@ public class UserDaoImpl  implements UserDao {
 	
 	public User exitsUser(String loginName) {
 		String hql=" from User u where u.loginName='"+loginName+"'";
-		List<User>us=this.find(hql);
+		List<User>us=getHibernateTemplate().find(hql);
 		if(us.size()>0){
 			return us.get(0);
 		}else{
 			return null;
 		}
 	}
-	@Override
 	public User login(String loginName, String password) {
 		String hql=" from User u where u.loginName='"+loginName+"' and u.password='"+password+"'";
-		List<User>us=this.find(hql);
+		List<User>us=getHibernateTemplate().find(hql);
 		if(us.size()>0){
 			return us.get(0);
 		}else{

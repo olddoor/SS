@@ -12,16 +12,16 @@
 <!DOCTYPE html> <!-- 这句很重要,通知使用W3C标准模式渲染 否则出现 easyui-combotree的显示异常及在IE8下无法使用的异常-->
 <html>
 <head>
-<jsp:include page="<%=contextPath%>/static/import.jsp"></jsp:include>
+<jsp:include page="/static/import.jsp"></jsp:include>
 <script type="text/javascript">
 	var submitForm = function($dialog, $grid, $pjq) {
 		if ($('form').form('validate')) {
 			var url;
-			if ($(':input[name="data.id"]').val().length > 0) {
-				url = myJSContext.contextPath + '/groupServlet?reqType=update';
-			} else {
-				url = myJSContext.contextPath + '/groupServlet?reqType=add';
-			}
+			//if ($(':input[name="data.id"]').val().length > 0) {
+				url = myJSContext.contextPath + '/group/saveORupdate';
+		//	} else {
+		//		url = myJSContext.contextPath + '/group/save';
+		//	}
 			$.post(url, sy.serializeObject($('form')), function(result) {
 				if (result.success) {
 					$grid.treegrid('reload');
@@ -35,7 +35,7 @@
 	var showIcons = function() {
 		var dialog = parent.sy.modalDialog({
 			title : '浏览小图标',
-			url : myJSContext.contextPath + '/jslib/style/icons.jsp',
+			url : myJSContext.contextPath + '/static/jslib/style/icons.jsp',
 			buttons : [ {
 				text : '确定',
 				handler : function() {
@@ -52,7 +52,7 @@
 			parent.$.messager.progress({
 				text : '数据加载中....'
 			});
-			$.post(myJSContext.contextPath + '/groupServlet?reqType=selectGroup',
+			$.post(myJSContext.contextPath + '/group/selectGroup',
 							{
 								id : $(':input[name="data.id"]').val()
 							},
@@ -105,7 +105,7 @@
 					<th>上级组织</th>
 					<td><select id="fatherGroup_id" name="fatherGroup.id"
 						class="easyui-combotree"
-						data-options="editable:false,idField:'id',textField:'name',parentField:'pid',url:'<%=contextPath%>/groupServlet?reqType=selectAll'"
+						data-options="editable:false,idField:'id',textField:'name',parentField:'pid',url:'<%=contextPath%>/group/selectAll'"
 						style="width: 155px;"></select><img class="iconImg ext-icon-cross"
 						onclick="$('#fatherGroup_id').combotree('clear');" title="清空" /></td>
 				</tr>

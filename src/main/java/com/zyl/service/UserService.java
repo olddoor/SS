@@ -4,12 +4,17 @@ import java.util.List;
 import java.util.Map;
 
 
+
+import org.springframework.transaction.annotation.Transactional;
+
 import com.zyl.entity.User;
 
 public interface UserService {
-
+	@Transactional
 	public void save(User u)throws Exception;
+	@Transactional
 	public void update(User u)throws Exception ;
+	@Transactional
 	public void delete(User u)throws Exception ;
 	public List<User> getUsers(Map<String,String> m) throws Exception;
 	public User login(String loginName,String password);

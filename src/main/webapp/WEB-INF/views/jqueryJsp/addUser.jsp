@@ -8,7 +8,7 @@
 	}
 %>
 <html>
-<jsp:include page="../../../static/import.jsp"></jsp:include>
+<jsp:include page="/static/import.jsp"></jsp:include>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>新增用户</title>

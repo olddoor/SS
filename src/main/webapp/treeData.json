@@ -13,7 +13,7 @@
     	"text":"组织管理",
     	"checked":true,
     	"attributes":{
-    	"url":"/jqueryJsp/groupList.jsp"
+    	"url":"/src/jqueryJsp/groupList"
     	}
     },{
     "text":"其他待定",

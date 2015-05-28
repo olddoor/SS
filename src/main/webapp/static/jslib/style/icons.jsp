@@ -6,7 +6,7 @@
 <html>
 <head>
 <title></title>
-<jsp:include page="<%=contextPath%>../../import.jsp"></jsp:include>
+<jsp:include page="/static/import.jsp"></jsp:include>
 <script type="text/javascript">
 	var selectIcon = function($dialog, $input) {
 		$input.val($(':radio:checked').val()).attr('class', $(':radio:checked').val());

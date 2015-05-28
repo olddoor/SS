@@ -9,20 +9,18 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
 
-import com.zyl.dao.UserDao;
 import com.zyl.dao.UserDaoImpl;
 import com.zyl.entity.User;
 @Component(value="userService")
 public class UserServiceImpl implements UserService {
 	
-//	private UserDao userDao = new UserDaoImpl();//后续用spring替代
-	private UserDao userDao;
+	private UserDaoImpl userDao;
 
-	public UserDao getUserDao() {
+	public UserDaoImpl getUserDao() {
 		return userDao;
 	}
 	@Resource(name="userDao")
-	public void setUserDao(UserDao userDao) {
+	public void setUserDao(UserDaoImpl userDao) {
 		this.userDao = userDao;
 	}
 
@@ -31,7 +29,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public void update(User vo)throws Exception  {
-		User oldUser=userDao.get(vo.getId());
+		User oldUser=(User) userDao.get(User.class,vo.getId());
 		if(vo.getLoginName()!=null&&!vo.getLoginName().equals("")){
 			oldUser.setLoginName(vo.getLoginName());
 		}
@@ -41,7 +39,7 @@ public class UserServiceImpl implements UserService {
 		if(vo.getPassword()!=null&&!vo.getPassword().equals("")){
 			oldUser.setPassword(vo.getPassword());
 		}
-		userDao.update(oldUser);
+		userDao.saveOrUpdate(oldUser);
 	}
 
 	public void delete(User u) throws Exception {
@@ -63,7 +61,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	public User getUser(String id){
-		return userDao.get(id)!=null ?userDao.get(id):null ;
+		return (User) userDao.get(User.class, id);
 	}
 
 	@Override
