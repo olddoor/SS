@@ -72,7 +72,19 @@ public class UserDaoImpl extends BaseDao {
 			}
 
 			final String hqL=HQL.toString();
-			List<User> toRet = getHibernateTemplate().executeFind(
+			/**
+			 * 我们使用spring和hibernate结合，操作数据库最常用可能是HibernateTemplate，
+			 * HibernateTemplate中集成了很多使用的方法，可惜的是没的createQuery方法，
+			 * 也许我们使用hibernate的时候喜欢使用Query，我们可能会封装
+			 * hibernateTemplate.getSessionFactory().getCurrentSession()方法得到
+			 * Session，session创建Query，这是一个方法，但你应该会得到异常
+			 *  “createQuery without an active transaction”，因为使用
+			 *  hibernateTemplate.getSessionFactory().getCurrentSession()，
+			 *  你是使用的hibernate的事务管理，而你指望spring管理的事务是hibernateTemplate，
+			 *  所以你会提示没有打开事务的异常，解决方法：1）使用hibernate事务处理，就像上面单独使用hibernate一样，
+			 *  但这也许不是你想要的。2）使用hibernateTemplate的HibernateCallBack回调：
+			 */
+			Long count = getHibernateTemplate().execute(
 					new HibernateCallback() {
 						public Object doInHibernate(Session session) throws HibernateException, SQLException {
 							Query query = session.createQuery(hqL);
@@ -112,12 +124,12 @@ public class UserDaoImpl extends BaseDao {
 									e.printStackTrace();
 								}
 							}
-							List<User> list = query.list();
-							return list;
+							Long ou = (Long) query.uniqueResult();
+							return ou;
 						}
 					}
 				);
-			return toRet!=null?new Long(toRet.size()):0L;
+			return count;
 	}
 	
 

@@ -25,21 +25,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public void save(User u)throws Exception {
-		userDao.save(u);
+		userDao.saveOrUpdate(u);
 	}
 
-	public void update(User vo)throws Exception  {
-		User oldUser=(User) userDao.get(User.class,vo.getId());
-		if(vo.getLoginName()!=null&&!vo.getLoginName().equals("")){
-			oldUser.setLoginName(vo.getLoginName());
-		}
-		if(vo.getUserName()!=null&&!vo.getUserName().equals("")){
-			oldUser.setUserName(vo.getUserName());
-		}
-		if(vo.getPassword()!=null&&!vo.getPassword().equals("")){
-			oldUser.setPassword(vo.getPassword());
-		}
-		userDao.saveOrUpdate(oldUser);
+	public void update(User u)throws Exception  {
+		userDao.saveOrUpdate(u);
 	}
 
 	public void delete(User u) throws Exception {

@@ -33,8 +33,11 @@ public interface UserService {
 	 * 符合条件的记录数
 	 * @throws Exception 
 	 */
+	@Transactional
 	public Long count(Map<String,String> m) throws Exception;
+	@Transactional
 	public Long count(String loginName, String userName,String cellNO) throws Exception;
+	@Transactional
 	public User getUser(String id);
 
 }

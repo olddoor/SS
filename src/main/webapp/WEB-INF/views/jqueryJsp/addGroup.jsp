@@ -17,7 +17,7 @@
 	var submitForm = function($dialog, $grid, $pjq) {
 		if ($('form').form('validate')) {
 			var url;
-			//if ($(':input[name="data.id"]').val().length > 0) {
+			//if ($(':input[name="id"]').val().length > 0) {
 				url = myJSContext.contextPath + '/group/saveORupdate';
 		//	} else {
 		//		url = myJSContext.contextPath + '/group/save';
@@ -48,13 +48,13 @@
 	
 	
 	$(function() {
-		if ($(':input[name="data.id"]').val().length > 0) {
+		if ($(':input[name="id"]').val().length > 0) {
 			parent.$.messager.progress({
 				text : '数据加载中....'
 			});
 			$.post(myJSContext.contextPath + '/group/selectGroup',
 							{
-								id : $(':input[name="data.id"]').val()
+								id : $(':input[name="id"]').val()
 							},
 							function(result) {
 								if (result.id != undefined) {
@@ -80,7 +80,7 @@
 		<fieldset>
 			<legend>组织信息</legend>
 			<table class="table" style="width: 100%;">
-				<input name="data.id" value="<%=id%>" readonly="readonly"
+				<input name="id" value="<%=id%>" readonly="readonly"
 					type="hidden" />
 				<tr>
 					<th>组织编码</th>

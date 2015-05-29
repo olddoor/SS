@@ -3,7 +3,7 @@
 	String contextPath = request.getContextPath();
 %>
 <html>
-<jsp:include page="../../../static/import.jsp"></jsp:include>
+<jsp:include page="/static/import.jsp"></jsp:include>
 <head>
 <title>用户管理</title>
 <script type="text/javascript">
@@ -69,8 +69,9 @@
 		});
 	};
 //用户组织绑定
-	var grantOrganizationFun = function(id) {
-		var dialog = parent.sy.modalDialog({
+	var grantOrganizationFun = function(region,divid) {
+		this.addPanel(region,divid);
+		/*var dialog = parent.sy.modalDialog({
 			title : '修改机构',
 			url : sy.contextPath + '/securityJsp/base/SyuserOrganizationGrant.jsp?id=' + id,
 			buttons : [ {
@@ -80,6 +81,7 @@
 				}
 			} ]
 		});
+		*/
 	};
 	
 /******************************************************************/	
@@ -183,8 +185,8 @@
 															'<img class="iconImg ext-icon-user" title="用户角色" onclick="grantRoleFun(\'{0}\');"/>',
 															row.id);
 											str += sy.formatString(
-															'<img class="iconImg ext-icon-group" title="用户机构" onclick="grantOrganizationFun(\'{0}\');"/>',
-															row.id);
+															'<img class="iconImg ext-icon-group" title="用户机构" onclick="grantOrganizationFun(\'{0}\',\'{1}\,\'{2}\');"/>',
+															'west',center_west,row.id);
 											str += sy.formatString(
 															'<img class="iconImg ext-icon-note_delete" title="删除" onclick="removeFun(\'{0}\');"/>',
 															row.id);
@@ -264,7 +266,7 @@
 							<td><div class="datagrid-btn-separator"></div></td>
 							<td><a href="javascript:void(0);" class="easyui-linkbutton"
 								data-options="iconCls:'ext-icon-table_add',plain:true"
-								onclick="">导入没做</a></td>
+								onclick="">人员组织调整</a></td>
 							<td><a href="javascript:void(0);" class="easyui-linkbutton"
 								data-options="iconCls:'ext-icon-table_go',plain:true" onclick="">导出没做</a></td>
 						</tr>
@@ -273,6 +275,7 @@
 			</tr>
 		</table>
 	</div>
+	<div id="center_west"></div>
 	<div data-options="region:'center',fit:true,border:false">
 		<table id="grid" data-options="fit:true,border:false"></table>
 	</div>

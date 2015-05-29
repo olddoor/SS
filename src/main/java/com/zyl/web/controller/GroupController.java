@@ -37,7 +37,7 @@ public class GroupController extends BaseController {
 	
 	@RequestMapping(value="selectGroup",method=RequestMethod.POST)
 	public void selectGroup(HttpServletRequest request,HttpServletResponse response,User u) throws IOException{
-		String id=request.getParameter("data.id");
+		String id=request.getParameter("id");
 		Group g=null;
 		if(id!=null&&!id.equals("")){
 			try {

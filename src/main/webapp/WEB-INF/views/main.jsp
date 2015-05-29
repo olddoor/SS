@@ -58,18 +58,20 @@
 </head>
 <body id="mainLayout" class="easyui-layout">
     <div data-options="region:'north',href:'<%=basePath%>/src/top'" style="height:100px; overflow: hidden;" ></div>
-    <div data-options="region:'south' , title:'South Title',split:true">
+    <!-- <div data-options="region:'south' , title:'South Title',split:true">  -->
     </div>
-    <div data-options="region:'east',title:'East',split:true" style="width:100px;"></div>
+   <!--  <div data-options="region:'east',title:'East',split:true" style="width:100px;"></div>
+     -->
     <div data-options="region:'west',split:true" title="菜单栏" style="width:200px;" >
     	<ul id="mainMenu"></ul>
     </div>
+    
     <div data-options="region:'center'" style="overflow: hidden;">
       <div id="mainTabs">
         <div title="欢迎" data-options="iconCls:'ext-icon-heart'" id="data_Div">
-          <iframe src="<%=basePath%>/src/welcome"
+         <!-- <iframe src="<%=basePath%>/src/welcome"
              allowTransparency="true" style="border: 0; width: 100%; height: 99%;" frameBorder="0">
-          </iframe>
+          </iframe> --> 
         </div>
       </div>
     </div>

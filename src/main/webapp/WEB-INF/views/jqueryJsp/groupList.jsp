@@ -22,7 +22,7 @@
 	var showFun = function(id) {
 		var dialog = parent.sy.modalDialog({
 			title : '查看组织信息',
-			url : myJSContext.contextPath + '/jqueryJsp/addGroup.jsp?id=' + id
+			url : myJSContext.contextPath + '/src/jqueryJsp/addGroup?id=' + id
 		});
 	};
 	var editFun = function(id) {
@@ -30,7 +30,7 @@
 		console.log(id);
 		var dialog = parent.sy.modalDialog({
 			title : '编辑组织信息',
-			url : myJSContext.contextPath + '/jqueryJsp/addGroup.jsp?id=' + id,
+			url : myJSContext.contextPath + '/src/jqueryJsp/addGroup?id=' + id,
 			buttons : [ {
 				text : '保存',
 				handler : function() {
