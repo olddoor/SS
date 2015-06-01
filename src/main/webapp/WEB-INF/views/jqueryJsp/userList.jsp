@@ -69,19 +69,28 @@
 		});
 	};
 //用户组织绑定
+//region位置
+//divid目标div的id
+ var center_west_status=false;
 	var grantOrganizationFun = function(region,divid) {
-		this.addPanel(region,divid);
-		/*var dialog = parent.sy.modalDialog({
-			title : '修改机构',
-			url : sy.contextPath + '/securityJsp/base/SyuserOrganizationGrant.jsp?id=' + id,
-			buttons : [ {
-				text : '修改',
-				handler : function() {
-					dialog.find('iframe').get(0).contentWindow.submitForm(dialog, grid, parent.$);
-				}
-			} ]
-		});
-		*/
+		if(!center_west_status){
+        var options = {
+            region: region
+        };
+		if (region=='north' || region=='south'){
+			options.height = 50;
+		} else {
+			options.width = 100;
+			options.split = true;
+			//options.title = $('#region option:selected').text();
+		}
+			$('#usercc').layout('add', options);
+			 center_west_status=true;
+		}
+		else {
+			center_west_status=false;
+		 	$('#usercc').layout('remove', region);
+		}
 	};
 	
 /******************************************************************/	
@@ -214,7 +223,8 @@
 	});
 </script>
 </head>
-<body class="easyui-layout" data-options="fit:true,border:false">
+<body>
+	<div id="usercc" class="easyui-layout" data-options="fit:true,border:false">
 	here is jqueryJSP/userlist.jsp
 	<!-- 工具栏 -->
 	<div id="toolbar" style="display: none;">
@@ -266,7 +276,7 @@
 							<td><div class="datagrid-btn-separator"></div></td>
 							<td><a href="javascript:void(0);" class="easyui-linkbutton"
 								data-options="iconCls:'ext-icon-table_add',plain:true"
-								onclick="">人员组织调整</a></td>
+								onclick="grantOrganizationFun('west','center_west')">人员组织调整</a></td>
 							<td><a href="javascript:void(0);" class="easyui-linkbutton"
 								data-options="iconCls:'ext-icon-table_go',plain:true" onclick="">导出没做</a></td>
 						</tr>
@@ -275,9 +285,10 @@
 			</tr>
 		</table>
 	</div>
-	<div id="center_west"></div>
+	<div id="center_west" data-options="region:'west',split:true" title="West" style="width:100px;"></div>
 	<div data-options="region:'center',fit:true,border:false">
 		<table id="grid" data-options="fit:true,border:false"></table>
+	</div>
 	</div>
 </body>
 </html>
