@@ -62,6 +62,18 @@ public class GroupController extends BaseController {
 		this.writeJson(gs, response); //利用封装的fastjson
 	}
 	
+	@RequestMapping(value="selectTree",method=RequestMethod.POST)
+	public void selectTree(HttpServletRequest request,HttpServletResponse response,User u) throws IOException{
+		List<Group> gs=null;
+		try {
+			gs = service.getTree(null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.writeJson(gs, response); //利用封装的fastjson
+	}
+	
 	@RequestMapping(value="saveORupdate",method=RequestMethod.POST)
 	public void saveORupdate(HttpServletRequest request,HttpServletResponse response,Group g) throws IOException{
 		msgStr msg=new msgStr();

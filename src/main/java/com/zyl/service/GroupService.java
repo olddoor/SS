@@ -18,6 +18,8 @@ public interface GroupService {
 	@Transactional
 	public void delete(Group g)throws Exception ;
 	public List<Group> getGroups(Map<String,String> m) throws Exception;
+	
+	public List<Group> getTree(Map m);
 	/**
 	 * @param loginName
 	 * @param userName
