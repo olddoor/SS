@@ -1,76 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	version="3.0">
-	<display-name>SS</display-name>
-	<!-- login filter -->
-	<filter>
-		<filter-name>SessionFilter</filter-name>
-		<filter-class>com.zyl.common.filter.SessionFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>SessionFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<!-- Spring配置文件  -->   
-	<context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>SS</display-name>
+  <filter>
+    <filter-name>SessionFilter</filter-name>
+    <filter-class>com.zyl.common.filter.SessionFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>SessionFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
             classpath*:/spring-context*.xml
         </param-value>
-    </context-param>
-    <listener>
-        <listener-class>
+  </context-param>
+  <listener>
+    <listener-class>
             org.springframework.web.context.ContextLoaderListener
         </listener-class>
-    </listener>
-	
-	<!-- Spring MVC -->
-	<servlet>
-		<servlet-name>springServlet</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath*:/spring-mvc*.xml</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>springServlet</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
-
-  <!-- DruidStatView: druid的sql语句查询时间等信息的监控功能 -->
+  </listener>
+  <servlet>
+    <servlet-name>springServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:/spring-mvc*.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>springServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>DruidStatView</servlet-name>
     <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
     <init-param>
       <param-name>allow</param-name>
       <param-value>127.0.0.1</param-value>
-  	</init-param>
+    </init-param>
   </servlet>
   <servlet-mapping>
-      <servlet-name>DruidStatView</servlet-name>
-      <url-pattern>/druid/*</url-pattern>
+    <servlet-name>DruidStatView</servlet-name>
+    <url-pattern>/druid/*</url-pattern>
   </servlet-mapping>
-  
-	<!-- Session 配置 -->
-	<session-config>
-		<session-timeout>2000</session-timeout>
-	</session-config>
-
-	<!-- 错误 页面配置 -->
-	<error-page>
-		<exception-type>java.lang.Throwable</exception-type>
-		<location>/WEB-INF/views/jqueryJsp/500.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>500</error-code>
-		<location>/WEB-INF/views/jqueryJsp/500.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>404</error-code>
-		<location>/WEB-INF/views/jqueryJsp/404-1.jsp</location>
-	</error-page>
+  <session-config>
+    <session-timeout>2000</session-timeout>
+  </session-config>
+  <error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/WEB-INF/views/jqueryJsp/500.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/WEB-INF/views/jqueryJsp/500.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/views/jqueryJsp/404-1.jsp</location>
+  </error-page>
 </web-app>

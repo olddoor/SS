@@ -30,7 +30,35 @@ if (cookieMap.containsKey("easyuiTheme")) {
 	myJSContext.basePath = '<%=basePath%>';
 	myJSContext.version = '<%=version%>';
 	myJSContext.pixel_0 = '<%=contextPath%>/static/jslib/style/images/pixel_0.gif';//0像素的背景，一般用于占位. 解决img不设置src而用css设置背景图片时,ie加载后出现图标的问题.
+	
+	
+	/**
+	 * 新增panel. 因为springmvc默认不拦截js等静态资源.所以相关请求无法使用springmvc拦截.
+	 * 这里以Servlet拦截跳转作为替代.
+	 */
+	function addPanel(region,targetDiv_Id,src){
+	   var options = {
+	        region: region
+	    };
+	    if (region=='north' || region=='south'){
+	        options.height = 50;
+	    } else {
+	        options.width = 100;
+	        options.split = true;
+	        options.title = $('#region option:selected').text();
+	    }
+	    if(src){
+	        //options.href=src;
+	    	options.href='/urlServlet';
+	    }
+	    $("#"+	targetDiv_Id).layout('add', options);
+	   
+	}
+	function removePanel(region,targetDiv_Id){
+		 $("#"+	targetDiv_Id).layout('remove', region);
+	}
 </script>
+
 <%
 	//String easyuiTheme = "default";//指定如果用户未选择样式，那么初始化一个默认样式
 %>

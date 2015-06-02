@@ -72,24 +72,14 @@
 //region位置
 //divid目标div的id
  var center_west_status=false;
-	var grantOrganizationFun = function(region,divid) {
+	var grantOrganizationFun = function(region,divid,src) {
 		if(!center_west_status){
-        var options = {
-            region: region
-        };
-		if (region=='north' || region=='south'){
-			options.height = 50;
-		} else {
-			options.width = 100;
-			options.split = true;
-			//options.title = $('#region option:selected').text();
-		}
-			$('#usercc').layout('add', options);
-			 center_west_status=true;
+			addPanel(region,divid,src);
+			center_west_status=true;
 		}
 		else {
+			removePanel(region,divid);
 			center_west_status=false;
-		 	$('#usercc').layout('remove', region);
 		}
 	};
 	
@@ -195,7 +185,7 @@
 															row.id);
 											str += sy.formatString(
 															'<img class="iconImg ext-icon-group" title="用户机构" onclick="grantOrganizationFun(\'{0}\',\'{1}\,\'{2}\');"/>',
-															'west',center_west,row.id);
+															'west',usercc);
 											str += sy.formatString(
 															'<img class="iconImg ext-icon-note_delete" title="删除" onclick="removeFun(\'{0}\');"/>',
 															row.id);
@@ -276,7 +266,7 @@
 							<td><div class="datagrid-btn-separator"></div></td>
 							<td><a href="javascript:void(0);" class="easyui-linkbutton"
 								data-options="iconCls:'ext-icon-table_add',plain:true"
-								onclick="grantOrganizationFun('west','center_west')">人员组织调整</a></td>
+								onclick="grantOrganizationFun('west','usercc','/src/jqueryJsp/top')">人员组织调整</a></td>
 							<td><a href="javascript:void(0);" class="easyui-linkbutton"
 								data-options="iconCls:'ext-icon-table_go',plain:true" onclick="">导出没做</a></td>
 						</tr>

@@ -47,6 +47,10 @@ public class GroupServiceImpl implements GroupService {
 	public Group getGroup(String id) throws Exception {
 		return groupDao.getGroup(id);
 	}
+	@Override
+	public List<Group> getTree(Map m) {
+		return groupDao.getTree(m);
+	}
 
 
 }

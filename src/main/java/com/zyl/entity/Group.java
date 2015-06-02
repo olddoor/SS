@@ -54,7 +54,7 @@ public class Group {
 	 *2级联操作仅仅用来节省代码,一般可配置在一的一端.在操作一的一段时自动根据配置操作多的一端.
 	 */
 	@OneToMany(mappedBy = "fatherGroup", cascade = CascadeType.ALL)//级联操作
-	private Set<Group> sonGroups;
+	private Set<Group> children;
 	
 	@OneToMany(mappedBy="group") //维护关系交给User
 	private Set<User> users;
@@ -124,17 +124,19 @@ public class Group {
 	public void setIconCls(String iconCls) {
 		this.iconCls = iconCls;
 	}
-	public Set<Group> getSonGroups() {
-		return sonGroups;
-	}
-	public void setSonGroups(Set<Group> sonGroups) {
-		this.sonGroups = sonGroups;
-	}
 	public Set<User> getUsers() {
 		return users;
 	}
 	public void setUsers(Set<User> users) {
 		this.users = users;
+	}
+
+	public Set<Group> getChildren() {
+		return children;
+	}
+
+	public void setChildren(Set<Group> children) {
+		this.children = children;
 	}
 	
 }
