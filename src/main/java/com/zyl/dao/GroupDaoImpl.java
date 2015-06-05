@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -38,12 +39,19 @@ public class GroupDaoImpl extends BaseDao {
 	}
 	public List<Group> getGroups(Map<String, String> m) throws Exception {
 		String hql=" from Group";
-		return getHibernateTemplate().find(hql);
+		List<Group> gs= getHibernateTemplate().find(hql);
+		return gs;
 	}
 	public List<Group> getTree(Map m) {
-		String hql=" select id,name as text, children as children from Group";
-		return getHibernateTemplate().f
+			List<Group> list=getHibernateTemplate().executeFind(new HibernateCallback(){        
+			            //实现HibernateCallback接口必须实现的方法   
+				public Object doInHibernate(Session session)throws HibernateException, SQLException{
+					String hql=" from Group";
+					Query query = session.createQuery(hql);
+					List<Group> list=query.list();
+					return query.list();
+				}});
+		return list;
 	}
-	
 	
 }

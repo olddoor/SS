@@ -64,10 +64,15 @@
 		</property>
 	</bean>
 	<!-- Hibernate Template Defintion结束 -->
+	<!--openSessionInView
+	<bean id="openSessionInViewInterceptor"  
+        class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">  
+        <property name="sessionFactory" ref="sessionFactory" />  
+    </bean>  
+	-->
 	
 	<!-- 定义事务 -->
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 

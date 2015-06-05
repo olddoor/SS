@@ -205,7 +205,7 @@ public class UserController extends BaseController {
 			msg.setSuccess(false);
 			msg.setMsgDetail(e.getMessage());
 		}
-		this.writeJson(msg, response);
+		this.writeJson(msg, null,null,response);
 	}
 	
 	/**
@@ -225,7 +225,7 @@ public class UserController extends BaseController {
 			msg.setMsgDetail(e.getMessage());
 			msg.setSuccess(false);
 		}
-		this.writeJson(msg, response);
+		this.writeJson(msg, null,null,response);
 	}
 	
 }

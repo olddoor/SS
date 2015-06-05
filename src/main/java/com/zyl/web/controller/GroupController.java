@@ -2,7 +2,9 @@ package com.zyl.web.controller;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.alibaba.fastjson.JSON;
 import com.zyl.entity.Group;
 import com.zyl.entity.User;
 import com.zyl.entity.msgStr;
@@ -47,7 +50,7 @@ public class GroupController extends BaseController {
 			}
 			
 		}
-		this.writeJson(g, response); //利用封装的fastjson
+		this.writeJson(g, null, null, response);
 	}
 	
 	@RequestMapping(value="selectAll",method=RequestMethod.POST)
@@ -59,7 +62,7 @@ public class GroupController extends BaseController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.writeJson(gs, response); //利用封装的fastjson
+		this.writeJson(gs,null,null, response); //利用封装的fastjson
 	}
 	
 	@RequestMapping(value="selectTree",method=RequestMethod.POST)
@@ -71,7 +74,22 @@ public class GroupController extends BaseController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.writeJson(gs, response); //利用封装的fastjson
+//		String[] excludesProperties = new String[] {"fatherGroup"}; 
+//		for(Group g:gs)
+//			if(g.getChildren()!=null){
+//				Set<Group> s=g.getChildren();
+//				for (Group obj: s) {  
+//					System.out.println(obj.getName());
+//				}  
+//			}
+		for(Group g:gs){
+			System.out.println(g.getName());
+			System.out.println("son:"+g.getChildren().size());
+			for(Group son:g.getChildren()){
+				System.out.println("son_"+son.getName());
+			}
+		}
+		this.writeJson(gs, null, null, response); //利用封装的fastjson
 	}
 	
 	@RequestMapping(value="saveORupdate",method=RequestMethod.POST)
@@ -95,7 +113,7 @@ public class GroupController extends BaseController {
 		}
 		msg.setSuccess(true);
 		msg.setMsg("操作成功");
-		this.writeJson(msg, response);
+		this.writeJson(msg,null,null, response);
 	}
 	
 }
