@@ -53,7 +53,7 @@ public class Group {
 	 * 
 	 *2级联操作仅仅用来节省代码,一般可配置在一的一端.在操作一的一段时自动根据配置操作多的一端.
 	 */
-	@OneToMany(mappedBy = "fatherGroup", cascade = CascadeType.ALL,fetch=FetchType.EAGER)//级联操作
+	@OneToMany(mappedBy = "fatherGroup", cascade = CascadeType.ALL)//级联操作
 	private Set<Group> children;
 	
 	@OneToMany(mappedBy="group") //维护关系交给User

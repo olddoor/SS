@@ -23,8 +23,10 @@ public class JsonUtils  {
 	 * 基于fastjson进行json及bean的转换
 	 * @param object
 	 * @param logger 传入转换对象的logger实例.可为空
-	 * @param includesProperties需要转换的属性
-	 * @param excludesProperties不需要转换的属性
+	 * @param includesProperties
+	 *            需要转换的属性
+	 * @param excludesProperties
+	 *            不需要转换的属性
 	 * @param User_Agent 为兼容IE6的JSON,传入请求文件的头部进行判断
 	 * 范例:getRequest().getHeader("User-Agent");
 	 * @return 
@@ -42,22 +44,16 @@ public class JsonUtils  {
 		}
 		String json;
 		if (User_Agent!=null&&!User_Agent.equals("")&&StringUtils.indexOfIgnoreCase(User_Agent, "MSIE 6") > -1) {
-			// 使用SerializerFeature.BrowserCompatible特性会把所有的中文都会序列化为\\uXXXX这种格式，字节数会多一些，但是能兼容IE6//SerializerFeature.DisableCircularReferenceDetect
-			json = JSON.toJSONString(object, filter, 
-									 SerializerFeature.WriteDateUseDateFormat, 
-									 SerializerFeature.DisableCircularReferenceDetect,
-									 SerializerFeature.WriteNullListAsEmpty,
-									 SerializerFeature.BrowserCompatible);
+			// 使用SerializerFeature.BrowserCompatible特性会把所有的中文都会序列化为\\uXXXX这种格式，字节数会多一些，但是能兼容IE6
+			json = JSON.toJSONString(object, filter, SerializerFeature.WriteDateUseDateFormat, SerializerFeature.DisableCircularReferenceDetect, SerializerFeature.BrowserCompatible);
 		} else {
 			// 使用SerializerFeature.WriteDateUseDateFormat特性来序列化日期格式的类型为yyyy-MM-dd hh24:mi:ss
 			// 使用SerializerFeature.DisableCircularReferenceDetect特性关闭引用检测和生成
-			json = JSON.toJSONString(object, filter, 
-									 SerializerFeature.WriteDateUseDateFormat, 
-									 SerializerFeature.DisableCircularReferenceDetect,
-									 SerializerFeature.WriteNullListAsEmpty);//, SerializerFeature.DisableCircularReferenceDetect
+			json = JSON.toJSONString(object, filter, SerializerFeature.WriteDateUseDateFormat, SerializerFeature.DisableCircularReferenceDetect);
 		}
 		return json;
 	}
+	
 	
 	
 	//obj2str 序列化

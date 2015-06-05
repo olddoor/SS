@@ -28,8 +28,9 @@ public abstract class BaseController {
 	 * @param response
 	 * @throws IOException
 	 */
-	public void writeJson(Object obj, String[] includesProperties, String[] excludesProperties,HttpServletResponse response) throws IOException{
-		String str=JsonUtils.obj2Str_ByFilter(obj, includesProperties, excludesProperties, null, null);//含时间格式化
+	public void writeJson(Object obj,HttpServletResponse response) throws IOException{
+		String str=JsonUtils.obj2Str_ByFilter(obj, null, null, null, null);//含时间格式化
 		JsonUtils.write(response, str);
 	}
+
 }
