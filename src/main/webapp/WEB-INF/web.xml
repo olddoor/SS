@@ -72,5 +72,5 @@
 	<error-page>
 		<error-code>404</error-code>
 		<location>/WEB-INF/views/jqueryJsp/404-1.jsp</location>
-	</error-page>
+	</error-page> 
 </web-app>
