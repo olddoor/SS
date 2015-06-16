@@ -22,7 +22,7 @@
 						handler : function() {
 							//即调用SyuserForm.jsp的submitForm方法
 							dialog.find('iframe').get(0).contentWindow
-									.submitNow(dialog, grid, parent.$);
+									.submitForm(dialog, grid, parent.$);
 						}
 					}, {
 						text : '重置',
@@ -30,7 +30,7 @@
 							dialog.find('iframe').get(0).contentWindow.reset();
 						}
 					} ]
-		}, '400', '450');//,
+		}, '600', '400');//,
 	};
 	//查看
 	var showFun = function(id) {
@@ -82,6 +82,18 @@
 			center_west_status=false;
 		}
 	};
+	
+	//生成二维码
+		var createQRcode=function (){
+			parent.$.messager.confirm('询问', '您确定批量更新二维码么', function(r) {
+				if (r) {
+					$.post(myJSContext.contextPath + '/user/createVcard', 
+							function() {
+								grid.datagrid('reload');
+					}, 'json');
+				}
+			});
+		};
 	
 /******************************************************************/	
 	var grid; //数据表格
@@ -268,14 +280,14 @@
 								data-options="iconCls:'ext-icon-table_add',plain:true"
 								onclick="grantOrganizationFun('west','usercc','/src/jqueryJsp/top')">人员组织调整</a></td>
 							<td><a href="javascript:void(0);" class="easyui-linkbutton"
-								data-options="iconCls:'ext-icon-table_go',plain:true" onclick="">导出没做</a></td>
+								data-options="iconCls:'ext-icon-table_go',plain:true" onclick="createQRcode()">生成二维码</a></td>
 						</tr>
 					</table>
 				</td>
 			</tr>
 		</table>
 	</div>
-	<div id="center_west" data-options="region:'west',split:true" title="West" style="width:100px;"></div>
+	<!--<div id="center_west" data-options="region:'west',split:true" title="West" style="width:100px;"></div>  -->
 	<div data-options="region:'center',fit:true,border:false">
 		<table id="grid" data-options="fit:true,border:false"></table>
 	</div>

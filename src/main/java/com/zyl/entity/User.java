@@ -60,9 +60,21 @@ public class  User implements Serializable{
 	 */
 	private Character enabled;
 	
+	private String company;
+	
+	private String company_address;
+	
+	private String fax;
+	
+	private String email;
+	
+	private String photo;
+	
 	@ManyToOne
 	@JoinColumn(name="group_id")
 	private Group group;
+	
+	private String QRphoto;
 	
 	// setter/getter
 	
@@ -70,6 +82,56 @@ public class  User implements Serializable{
 		if (enabled == null)
 			return null;
 		return enabled == 'Y' ? Boolean.TRUE : Boolean.FALSE;
+	}
+	
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public String getCompany_address() {
+		return company_address;
+	}
+
+	public void setCompany_address(String company_address) {
+		this.company_address = company_address;
+	}
+
+	public String getFax() {
+		return fax;
+	}
+
+	@Column(name = "PHOTO", length = 200)
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@Column(name = "QRPHOTO", length = 200)
+	public String getQRphoto() {
+		return QRphoto;
+	}
+
+	public void setQRphoto(String qRphoto) {
+		QRphoto = qRphoto;
 	}
 
 	public void setEnabled(Boolean enabled) {

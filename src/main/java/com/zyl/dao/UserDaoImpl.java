@@ -132,7 +132,12 @@ public class UserDaoImpl extends BaseDao {
 			return count;
 	}
 	
-
+	public List<User> getUsers() throws Exception {
+		StringBuffer HQL=new StringBuffer("  from User u WHERE 1=1");
+		List<User> us=this.getHibernateTemplate().find(HQL.toString());
+		return us;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<User> getUsers(Map<String, String> m) throws Exception {
 		int maxResults=10;
@@ -157,6 +162,7 @@ public class UserDaoImpl extends BaseDao {
 			if(m.get("order")!=null){
 				order=m.get("order");
 			}
+			
 		}
 		StringBuffer HQL=new StringBuffer("  from User u WHERE 1=1");
 		

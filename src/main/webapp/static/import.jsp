@@ -68,12 +68,12 @@ if (cookieMap.containsKey("easyuiTheme")) {
 <%-- 引入jQuery --%>
 <%
 String User_Agent = request.getHeader("User-Agent");
-out.print("============="+User_Agent);
+//out.print("============="+User_Agent);
 if (StringUtils.indexOfIgnoreCase(User_Agent, "MSIE") > -1 && (StringUtils.indexOfIgnoreCase(User_Agent, "MSIE 6") > -1 || StringUtils.indexOfIgnoreCase(User_Agent, "MSIE 7") > -1 || StringUtils.indexOfIgnoreCase(User_Agent, "MSIE 8") > -1)) {
-	out.print("=====1======");
+	//out.print("=====1======");
 	out.println("<script src='" + contextPath + "/static/jslib/script/jquery-1.9.1.js' type='text/javascript' charset='utf-8'></script>");
 } else {
-	out.print("=====2======");
+	//out.print("=====2======");
 	out.println("<script src='" + contextPath + "/static/jslib/script/jquery-2.0.3.js' type='text/javascript' charset='utf-8'></script>");
 }
 %>
@@ -85,6 +85,11 @@ if (StringUtils.indexOfIgnoreCase(User_Agent, "MSIE") > -1 && (StringUtils.index
 <link id="easyuiTheme" rel="stylesheet" href="<%=contextPath%>/static/jslib/easyui/themes/bootstrap/easyui.css" type="text/css">
 <script type="text/javascript" src="<%=contextPath%>/static/jslib/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/static/jslib/easyui/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
+
+<%-- 引入plupload --%>
+<script type="text/javascript" src="<%=contextPath%>/static/jslib/jsPlugin/plupload-2.0.0/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/static/jslib/jsPlugin/plupload-2.0.0/js/i18n/zh_CN.js"></script>
+
 
 <%-- 引入easyui扩展 --%>
 <script src="<%=contextPath%>/static/jslib/jsPlugin/util/syExtEasyUI.js" type="text/javascript" charset="utf-8"></script>

@@ -39,5 +39,7 @@ public interface UserService {
 	public Long count(String loginName, String userName,String cellNO) throws Exception;
 	@Transactional
 	public User getUser(String id);
+	
+	public String createVcard();
 
 }

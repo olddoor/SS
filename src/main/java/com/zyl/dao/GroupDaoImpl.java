@@ -42,7 +42,7 @@ public class GroupDaoImpl extends BaseDao {
 	}
 	public List<Group> getTree(Map m) {
 		String hql=" select id,name as text, children as children from Group";
-		return getHibernateTemplate().f
+		return null;
 	}
 	
 	

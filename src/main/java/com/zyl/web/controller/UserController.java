@@ -228,4 +228,11 @@ public class UserController extends BaseController {
 		this.writeJson(msg, response);
 	}
 	
+	@RequestMapping(value="createVcard",method=RequestMethod.POST)
+	public void createVcard(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		msgStr msg=new msgStr();
+		userService.createVcard();
+		this.writeJson(msg, response);
+	}
+	
 }

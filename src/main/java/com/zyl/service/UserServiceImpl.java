@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.zyl.dao.UserDaoImpl;
 import com.zyl.entity.User;
+import com.zyl.util.QRCodeUtil;
 @Component(value="userService")
 public class UserServiceImpl implements UserService {
 	
@@ -80,6 +81,22 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User exitsUser(String loginName) {
 		return userDao.exitsUser(loginName);
+	}
+	@Override
+	public String createVcard() {
+		try {
+			List<User>us =userDao.getUsers();
+			for(User u:us){
+				if(u.getLoginName()!=null&&!u.getLoginName().equals("")){
+					QRCodeUtil qt=new QRCodeUtil();
+					qt.encode(u.getLoginName(), u.getLoginName());
+					qt.decode(u.getLoginName());
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
