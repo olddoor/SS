@@ -196,7 +196,7 @@
 															'<img class="iconImg ext-icon-user" title="用户角色" onclick="grantRoleFun(\'{0}\');"/>',
 															row.id);
 											str += sy.formatString(
-															'<img class="iconImg ext-icon-group" title="用户机构" onclick="grantOrganizationFun(\'{0}\',\'{1}\,\'{2}\');"/>',
+															'<img class="iconImg ext-icon-group" title="用户机构" onclick="grantOrganizationFun(\'{0}\',\'{1}\');"/>',
 															'west',usercc);
 											str += sy.formatString(
 															'<img class="iconImg ext-icon-note_delete" title="删除" onclick="removeFun(\'{0}\');"/>',
@@ -287,7 +287,7 @@
 			</tr>
 		</table>
 	</div>
-	<!--<div id="center_west" data-options="region:'west',split:true" title="West" style="width:100px;"></div>  -->
+	<div id="center_west" data-options="region:'west',split:true" title="组织树" style="width:150px;"></div>
 	<div data-options="region:'center',fit:true,border:false">
 		<table id="grid" data-options="fit:true,border:false"></table>
 	</div>

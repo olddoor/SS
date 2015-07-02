@@ -69,9 +69,9 @@
     <div data-options="region:'center'" style="overflow: hidden;">
       <div id="mainTabs">
         <div title="欢迎" data-options="iconCls:'ext-icon-heart'" id="data_Div">
-         <!-- <iframe src="<%=basePath%>/src/welcome"
+        	<iframe src="<%=basePath%>/src/welcome"
              allowTransparency="true" style="border: 0; width: 100%; height: 99%;" frameBorder="0">
-          </iframe> --> 
+          </iframe>
         </div>
       </div>
     </div>
